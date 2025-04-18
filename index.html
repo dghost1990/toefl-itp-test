@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار التوفل ITP l - </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        .section-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .question {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+        .options {
+            margin-right: 20px;
+        }
+        .option {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .option:hover {
+            background: #e3f2fd;
+        }
+        input[type="radio"] {
+            margin-left: 10px;
+        }
+        button {
+            display: block;
+            width: 200px;
+            padding: 12px;
+            margin: 30px auto;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        #result {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+            background: #f8f9fa;
+        }
+        .correct {
+            color: #2e7d32;
+        }
+        .wrong {
+            color: #c62828;
+        }
+        .explanation {
+            display: none;
+            margin-top: 15px;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 5px;
+            border-right: 3px solid #4caf50;
+        }
+        .show-explanation {
+            color: #0277bd;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        .show-explanation:hover {
+            text-decoration: underline;
+        }
+        .reading-passage {
+            background: #fff8e1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ffa000;
+        }
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .tab button {
+            float: right;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 10px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            width: auto;
+            margin: 5px;
+            border-radius: 3px;
+        }
+        .tab button:hover {
+            background-color: #ddd;
+        }
+        .tab button.active {
+            background-color: #3498db;
+            color: white;
+        }
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            animation: fadeEffect 1s;
+        }
+        @keyframes fadeEffect {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        .tts-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .play-btn {
+            background: #4285f4;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px auto;
+            display: block;
+            width: 150px;
+        }
+        .play-btn:hover {
+            background: #3367d6;
+        }
+        .hidden-audio-text {
+            display: none;
+        }
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .control-btn {
+            padding: 5px 10px;
+            border-radius: 4px;
+            background: #f1f1f1;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>اختبار التوفل ITP  - </h1>
+        
+        <div class="tab">
+            <button class="tablinks active" onclick="openSection(event, 'structure')">Structure (20 سؤالاً)</button>
+            <button class="tablinks" onclick="openSection(event, 'reading')">Reading (20 سؤالاً)</button>
+            <button class="tablinks" onclick="openSection(event, 'listening')">Listening (10 أسئلة)</button>
+        </div>
+        
+        <div id="structure" class="tabcontent" style="display: block;">
+            <h2>القسم الأول: Structure and Written Expression</h2>
+            <div class="section-info">
+                <p>اختر الإجابة الصحيحة لاستكمال الجملة أو تصحيح الخطأ النحوي.</p>
+            </div>
+            <div id="structure-container"></div>
+        </div>
+        
+        <div id="reading" class="tabcontent">
+            <h2>القسم الثاني: Reading Comprehension</h2>
+            <div class="section-info">
+                <p>اقرأ النصوص التالية ثم اختر الإجابة الصحيحة للأسئلة.</p>
+            </div>
+            <div id="reading-container"></div>
+        </div>
+        
+        <div id="listening" class="tabcontent">
+            <h2>القسم الثالث: Listening Comprehension</h2>
+            <div class="section-info">
+                <p>انقر على زر التشغيل للاستماع إلى كل مقطع ثم اختر الإجابة الصحيحة.</p>
+            </div>
+            <div id="listening-container"></div>
+        </div>
+        
+        <button onclick="calculateScore()">عرض النتيجة النهائية</button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Structure and Written Expression (20 سؤالاً)
+        const structureQuestions = [
+            {
+                question: "1. By the time we arrived, the movie __________.",
+                options: ["A) already started", "B) has already started", "C) had already started", "D) would start"],
+                correctAnswer: 2,
+                explanation: "الإجابة الصحيحة: C) had already started<br><br>الشرح: نستخدم past perfect للحدث الذي تم قبل حدث آخر في الماضي."
+            },
+            {
+                question: "2. Neither the students nor the teacher __________ about the change in schedule.",
+                options: ["A) know", "B) knows", "C) knowing", "D) have known"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) knows<br><br>الشرح: مع 'neither...nor' الفعل يتفق مع أقرب فاعل (teacher مفرد)."
+            },
+            {
+                question: "3. She suggested that he __________ a doctor immediately.",
+                options: ["A) sees", "B) see", "C) saw", "D) would see"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) see<br><br>الشرح: بعد أفعال مثل suggest/recommend نستخدم المصدر دون 'to'."
+            },
+            {
+                question: "4. The report __________ by the research team last month.",
+                options: ["A) was completed", "B) completed", "C) has completed", "D) had completed"],
+                correctAnswer: 0,
+                explanation: "الإجابة الصحيحة: A) was completed<br><br>الشرح: الجملة مبنية للمجهول في الماضي البسيط."
+            },
+            {
+                question: "5. If I __________ you, I would reconsider that decision.",
+                options: ["A) am", "B) was", "C) were", "D) have been"],
+                correctAnswer: 2,
+                explanation: "الإجابة الصحيحة: C) were<br><br>الشرح: جملة شرطية غير واقعية (Type 2) - نستخدم 'were' لجميع الضمائر."
+            },
+            {
+                question: "6. The committee __________ on this issue for several hours.",
+                options: ["A) debate", "B) debates", "C) are debating", "D) have debated"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) debates<br><br>الشرح: كلمة committee تعتبر مفردة هنا."
+            },
+            {
+                question: "7. Not only the students but also the professor __________ attending the conference.",
+                options: ["A) is", "B) are", "C) were", "D) have been"],
+                correctAnswer: 0,
+                explanation: "الإجابة الصحيحة: A) is<br><br>الشرح: الفعل يتفق مع أقرب فاعل (professor مفرد)."
+            },
+            {
+                question: "8. She __________ her keys at least three times this week.",
+                options: ["A) loses", "B) lost", "C) has lost", "D) had lost"],
+                correctAnswer: 2,
+                explanation: "الإجابة الصحيحة: C) has lost<br><br>الشرح: مع 'this week' نستخدم present perfect."
+            },
+            {
+                question: "9. The results of the experiment __________ surprising.",
+                options: ["A) was", "B) were", "C) has been", "D) is"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) were<br><br>الشرح: الفاعل 'results' جمع ويحتاج فعل جمع."
+            },
+            {
+                question: "10. He made his children __________ their homework before dinner.",
+                options: ["A) to finish", "B) finish", "C) finishing", "D) finished"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) finish<br><br>الشرح: بعد 'made' نستخدم المصدر دون 'to'."
+            },
+            {
+                question: "11. The proposal __________ by the board of directors tomorrow.",
+                options: ["A) will discuss", "B) will be discussed", "C) is discussing", "D) discusses"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) will be discussed<br><br>الشرح: جملة مبنية للمجهول للمستقبل."
+            },
+            {
+                question: "12. Hardly __________ when the phone rang.",
+                options: ["A) he had arrived", "B) had he arrived", "C) he arrived", "D) did he arrive"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) had he arrived<br><br>الشرح: مع 'hardly' نستخدم past perfect وانعكاس الفاعل والفعل."
+            },
+            {
+                question: "13. She is one of those people who __________ always punctual.",
+                options: ["A) is", "B) are", "C) was", "D) has been"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) are<br><br>الشرح: الفعل يتفق مع 'people' (جمع) وليس 'one'."
+            },
+            {
+                question: "14. The number of students in the class __________ increased this semester.",
+                options: ["A) have", "B) has", "C) are", "D) is"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) has<br><br>الشرح: 'The number' تعتبر فاعل مفرد."
+            },
+            {
+                question: "15. If she __________ earlier, she wouldn't have missed the train.",
+                options: ["A) left", "B) had left", "C) would leave", "D) leaves"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) had left<br><br>الشرح: جملة شرطية من النوع الثالث (لحدث في الماضي)."
+            },
+            {
+                question: "16. The teacher demanded that the assignment __________ on time.",
+                options: ["A) is submitted", "B) be submitted", "C) was submitted", "D) would be submitted"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) be submitted<br><br>الشرح: بعد 'demanded that' نستخدم subjunctive mood."
+            },
+            {
+                question: "17. Neither of the options __________ acceptable to the committee.",
+                options: ["A) are", "B) is", "C) were", "D) have been"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) is<br><br>الشرح: 'Neither' تعتبر فاعل مفرد."
+            },
+            {
+                question: "18. The company, along with its subsidiaries, __________ to expand next year.",
+                options: ["A) plan", "B) plans", "C) are planning", "D) have planned"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) plans<br><br>الشرح: الفاعل الرئيسي هو 'company' (مفرد)."
+            },
+            {
+                question: "19. Scarcely __________ the door when the alarm went off.",
+                options: ["A) he had closed", "B) had he closed", "C) he closed", "D) did he close"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) had he closed<br><br>الشرح: مع 'scarcely' نستخدم past perfect وانعكاس الفاعل والفعل."
+            },
+            {
+                question: "20. The data __________ inconclusive at this point.",
+                options: ["A) is", "B) are", "C) was", "D) were"],
+                correctAnswer: 0,
+                explanation: "الإجابة الصحيحة: A) is<br><br>الشرح: 'data' تعتبر مفردة في هذا السياق."
+            }
+        ];
+
+        // Reading Comprehension (20 سؤالاً)
+        const readingData = [
+            {
+                passage: "The Industrial Revolution, which began in Britain in the late 18th century, marked a major turning point in history. It transformed economies that had been based on agriculture and handicrafts into economies based on large-scale industry, mechanized manufacturing, and the factory system. New machines, new power sources, and new ways of organizing work made existing industries more productive and efficient.",
+                questions: [
+                    {
+                        question: "1. Where did the Industrial Revolution begin?",
+                        options: ["A) France", "B) Germany", "C) Britain", "D) United States"],
+                        correctAnswer: 2,
+                        explanation: "الإجابة الصحيحة: C) Britain<br><br>الشرح: النص يذكر أن الثورة الصناعية بدأت في بريطانيا."
+                    },
+                    {
+                        question: "2. What did the Industrial Revolution primarily transform?",
+                        options: ["A) Political systems", "B) Agricultural economies", "C) Religious beliefs", "D) Educational methods"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) Agricultural economies<br><br>الشرح: النص يذكر أنها حولت الاقتصادات الزراعية إلى صناعية."
+                    },
+                    {
+                        question: "3. Which of the following was NOT mentioned as a factor in the Industrial Revolution?",
+                        options: ["A) New machines", "B) New political theories", "C) New power sources", "D) New ways of organizing work"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) New political theories<br><br>الشرح: النص لم يذكر النظريات السياسية."
+                    },
+                    {
+                        question: "4. What was the main result of the Industrial Revolution?",
+                        options: ["A) Decreased productivity", "B) More efficient industries", "C) Return to agricultural economy", "D) Reduced population growth"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) More efficient industries<br><br>الشرح: النص يذكر أن الصناعات أصبحت أكثر إنتاجية وكفاءة."
+                    }
+                ]
+            },
+            {
+                passage: "Global warming refers to the long-term rise in the average temperature of the Earth's climate system. It is a major aspect of climate change and has been demonstrated by direct temperature measurements and by measurements of various effects of the warming. The primary cause of global warming is the human expansion of the 'greenhouse effect' - warming that results when the atmosphere traps heat radiating from Earth toward space.",
+                questions: [
+                    {
+                        question: "5. What is the main topic of this passage?",
+                        options: ["A) Air pollution", "B) Global warming", "C) Deforestation", "D) Water scarcity"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) Global warming<br><br>الشرح: النص يركز على ظاهرة الاحتباس الحراري."
+                    },
+                    {
+                        question: "6. What is mentioned as the primary cause of global warming?",
+                        options: ["A) Volcanic activity", "B) Human expansion of greenhouse effect", "C) Solar radiation", "D) Natural climate cycles"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) Human expansion of greenhouse effect<br><br>الشرح: النص يذكر أن السبب الرئيسي هو النشاط البشري."
+                    },
+                    {
+                        question: "7. How has global warming been demonstrated?",
+                        options: ["A) Through political debates", "B) By temperature measurements", "C) By economic indicators", "D) Through population statistics"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) By temperature measurements<br><br>الشرح: النص يذكر القياسات المباشرة لدرجات الحرارة."
+                    },
+                    {
+                        question: "8. What does the 'greenhouse effect' refer to?",
+                        options: ["A) Cooling of the atmosphere", "B) Trapping of heat in the atmosphere", "C) Depletion of ozone layer", "D) Increase in ocean currents"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) Trapping of heat in the atmosphere<br><br>الشرح: النص يذكر أن الاحتباس الحراري ينتج عن احتباس الحرارة."
+                    }
+                ]
+            },
+            {
+                passage: "The human brain is the most complex organ in the body. It controls thought, memory, emotion, touch, motor skills, vision, breathing, temperature, hunger, and every process that regulates our body. The brain and spinal cord make up the central nervous system. The brain is composed of about 100 billion neurons that communicate in trillions of connections called synapses.",
+                questions: [
+                    {
+                        question: "9. What is described as the most complex organ in the body?",
+                        options: ["A) Heart", "B) Liver", "C) Brain", "D) Lungs"],
+                        correctAnswer: 2,
+                        explanation: "الإجابة الصحيحة: C) Brain<br><br>الشرح: النص يصف الدماغ بأنه العضو الأكثر تعقيداً."
+                    },
+                    {
+                        question: "10. Which system does the brain belong to?",
+                        options: ["A) Digestive system", "B) Central nervous system", "C) Circulatory system", "D) Respiratory system"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) Central nervous system<br><br>الشرح: النص يذكر أن الدماغ والحبل الشوكي يشكلان الجهاز العصبي المركزي."
+                    },
+                    {
+                        question: "11. Approximately how many neurons is the brain composed of?",
+                        options: ["A) 1 million", "B) 1 billion", "C) 100 billion", "D) 1 trillion"],
+                        correctAnswer: 2,
+                        explanation: "الإجابة الصحيحة: C) 100 billion<br><br>الشرح: النص يذكر أن الدماغ يتكون من حوالي 100 مليار خلية عصبية."
+                    },
+                    {
+                        question: "12. Which of the following is NOT mentioned as being controlled by the brain?",
+                        options: ["A) Memory", "B) Emotion", "C) Digestion", "D) Breathing"],
+                        correctAnswer: 2,
+                        explanation: "الإجابة الصحيحة: C) Digestion<br><br>الشرح: النص لم يذكر عملية الهضم ضمن الوظائف التي يتحكم فيها الدماغ."
+                    }
+                ]
+            },
+            {
+                passage: "The Internet has revolutionized communication and access to information. It allows instant connectivity across the globe, enabling people to share ideas, conduct business, and access knowledge from anywhere at any time. The development of the World Wide Web in 1989 by Tim Berners-Lee marked a significant milestone in making the Internet accessible to the general public. Today, the Internet has become an essential tool in education, commerce, and social interaction.",
+                questions: [
+                    {
+                        question: "13. What has the Internet revolutionized?",
+                        options: ["A) Transportation", "B) Communication", "C) Agriculture", "D) Construction"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) Communication<br><br>الشرح: النص يذكر أن الإنترنت أحدث ثورة في الاتصالات."
+                    },
+                    {
+                        question: "14. Who developed the World Wide Web?",
+                        options: ["A) Bill Gates", "B) Steve Jobs", "C) Tim Berners-Lee", "D) Mark Zuckerberg"],
+                        correctAnswer: 2,
+                        explanation: "الإجابة الصحيحة: C) Tim Berners-Lee<br><br>الشرح: النص يذكر أن تيم بيرنرز لي طور الويب العالمي عام 1989."
+                    },
+                    {
+                        question: "15. What is mentioned as a benefit of the Internet?",
+                        options: ["A) Slower communication", "B) Limited access to information", "C) Instant global connectivity", "D) Higher transportation costs"],
+                        correctAnswer: 2,
+                        explanation: "الإجابة الصحيحة: C) Instant global connectivity<br><br>الشرح: النص يذكر أن الإنترنت يتيح الاتصال الفوري عالمياً."
+                    },
+                    {
+                        question: "16. In which fields has the Internet become essential?",
+                        options: ["A) Education and commerce", "B) Agriculture only", "C) Construction only", "D) Manufacturing only"],
+                        correctAnswer: 0,
+                        explanation: "الإجابة الصحيحة: A) Education and commerce<br><br>الشرح: النص يذكر التعليم والتجارة كمجالات أساسية للإنترنت."
+                    }
+                ]
+            },
+            {
+                passage: "Biodiversity refers to the variety of life on Earth at all its levels, from genes to ecosystems. It encompasses the evolutionary, ecological, and cultural processes that sustain life. Biodiversity is not evenly distributed; it is generally greater in the tropics and tends to be concentrated in certain hotspots. The loss of biodiversity threatens essential ecosystem services that humans depend on, such as clean air, fresh water, and crop pollination.",
+                questions: [
+                    {
+                        question: "17. What does biodiversity refer to?",
+                        options: ["A) Only animal species", "B) Variety of life at all levels", "C) Only plant species", "D) Only marine life"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) Variety of life at all levels<br><br>الشرح: النص يعرف التنوع الحيوي بأنه تنوع الحياة على جميع المستويات."
+                    },
+                    {
+                        question: "18. Where is biodiversity generally greater?",
+                        options: ["A) In polar regions", "B) In deserts", "C) In the tropics", "D) In urban areas"],
+                        correctAnswer: 2,
+                        explanation: "الإجابة الصحيحة: C) In the tropics<br><br>الشرح: النص يذكر أن التنوع الحيوي أكبر عموماً في المناطق الاستوائية."
+                    },
+                    {
+                        question: "19. What is threatened by the loss of biodiversity?",
+                        options: ["A) Ecosystem services", "B) Urban development", "C) Industrial growth", "D) Technological advancement"],
+                        correctAnswer: 0,
+                        explanation: "الإجابة الصحيحة: A) Ecosystem services<br><br>الشرح: النص يذكر أن فقدان التنوع الحيوي يهدد خدمات النظم البيئية."
+                    },
+                    {
+                        question: "20. Which of the following is NOT mentioned as an ecosystem service?",
+                        options: ["A) Clean air", "B) Fresh water", "C) Crop pollination", "D) Internet access"],
+                        correctAnswer: 3,
+                        explanation: "الإجابة الصحيحة: D) Internet access<br><br>الشرح: النص لم يذكر الوصول للإنترنت كخدمة للنظام البيئي."
+                    }
+                ]
+            }
+        ];
+
+        // Listening Comprehension (10 أسئلة)
+        const listeningQuestions = [
+            {
+                audioText: "Man: Excuse me, do you know where the nearest post office is? Woman: Yes, it's about two blocks from here. Go straight down this street, then turn left at the traffic light. It will be on your right next to the bank.",
+                question: "1. Where is the post office located?",
+                options: ["A) Next to the hospital", "B) Opposite the school", "C) Next to the bank", "D) Behind the supermarket"],
+                correctAnswer: 2,
+                explanation: "الإجابة الصحيحة: C) Next to the bank<br><br>الشرح: المرأة قالت 'سيكون على يمينك بجوار البنك'."
+            },
+            {
+                audioText: "Woman: Are you coming to the meeting tomorrow? Man: I'm afraid I can't. I have a doctor's appointment at that time.",
+                question: "2. Why can't the man attend the meeting?",
+                options: ["A) He's sick", "B) He has a doctor's appointment", "C) He'll be traveling", "D) He has another meeting"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) He has a doctor's appointment<br><br>الشرح: الرجل قال 'لدي موعد مع الطبيب في ذلك الوقت'."
+            },
+            {
+                audioText: "Professor: The assignment is due next Friday, not this Friday. Student: Oh, I thought it was due this week!",
+                question: "3. When is the assignment due?",
+                options: ["A) This Friday", "B) Next Friday", "C) Tomorrow", "D) In two weeks"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) Next Friday<br><br>الشرح: الأستاذ قال 'الواجب مستحق الجمعة القادمة، ليس هذا الجمعة'."
+            },
+            {
+                audioText: "Woman: Should we take the train or drive to the conference? Man: Let's drive. It's more flexible and we can leave when we want.",
+                question: "4. Why does the man prefer driving?",
+                options: ["A) It's cheaper", "B) It's more flexible", "C) It's faster", "D) It's more comfortable"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) It's more flexible<br><br>الشرح: الرجل قال 'القيادة أكثر مرونة ويمكننا المغادرة عندما نريد'."
+            },
+            {
+                audioText: "Man: I can't decide between the blue shirt and the green one. Woman: Well, the blue one matches your eyes better.",
+                question: "5. What does the woman recommend?",
+                options: ["A) The green shirt", "B) The blue shirt", "C) Neither shirt", "D) Both shirts"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) The blue shirt<br><br>الشرح: المرأة قالت 'اللون الأزرق يناسب لون عينيك أكثر'."
+            },
+            {
+                audioText: "Tour guide: This museum was built in 1892 and houses over 10,000 artifacts from ancient civilizations.",
+                question: "6. When was the museum built?",
+                options: ["A) 1792", "B) 1892", "C) 1992", "D) 2002"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) 1892<br><br>الشرح: المرشد السياحي قال 'تم بناء هذا المتحف عام 1892'."
+            },
+            {
+                audioText: "Woman: The seminar has been moved from Room 201 to Room 305. Man: Thanks for letting me know. I would have gone to the wrong place.",
+                question: "7. Where is the seminar now?",
+                options: ["A) Room 201", "B) Room 305", "C) Room 105", "D) Room 401"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) Room 305<br><br>الشرح: المرأة قالت 'تم نقل الندوة من الغرفة 201 إلى الغرفة 305'."
+            },
+            {
+                audioText: "Man: Do you want to get lunch at the new Italian restaurant? Woman: Actually, I had Italian last night. How about the Thai place instead?",
+                question: "8. Where will they probably eat?",
+                options: ["A) Italian restaurant", "B) Thai restaurant", "C) At home", "D) French restaurant"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) Thai restaurant<br><br>الشرح: المرأة اقترحت الذهاب إلى المطعم التايلاندي بدلاً من الإيطالي."
+            },
+            {
+                audioText: "Professor: Remember, the exam will cover chapters 5 through 8, not chapter 9. Student: Good, because I haven't read chapter 9 yet.",
+                question: "9. Which chapters are on the exam?",
+                options: ["A) 1-4", "B) 5-8", "C) 6-9", "D) All chapters"],
+                correctAnswer: 1,
+                explanation: "الإجابة الصحيحة: B) 5-8<br><br>الشرح: الأستاذ قال 'الامتحان سيغطي الفصول من 5 إلى 8، ليس الفصل 9'."
+            },
+            {
+                audioText: "Woman: The library closes at 9 tonight, not 10. Man: Oh, then we should hurry if we want to return these books.",
+                question: "10. Why are they hurrying?",
+                options: ["A) The library is closing soon", "B) They have another appointment", "C) The books are overdue", "D) They want to check out more books"],
+                correctAnswer: 0,
+                explanation: "الإجابة الصحيحة: A) The library is closing soon<br><br>الشرح: المكتبة ستغلق الساعة 9 بدلاً من 10، لذا عليهم الإسراع."
+            }
+        ];
+
+        // دالة تحويل النص إلى كلام
+        function speakText(text) {
+            // إيقاف أي كلام جاري
+            window.speechSynthesis.cancel();
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = "en-US";
+            utterance.rate = 0.9; // سرعة أقل لزيادة الوضوح
+            utterance.pitch = 1;
+            
+            // محاولة استخدام صوت Google إن وجد
+            const voices = window.speechSynthesis.getVoices();
+            const googleVoice = voices.find(voice => 
+                voice.lang === 'en-US' && voice.name.includes('Google'));
+            utterance.voice = googleVoice || voices.find(voice => voice.lang === 'en-US');
+            
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // عرض الأسئلة عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            displayQuestions();
+            
+            // تحميل الأصوات المتاحة
+            if (speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = loadVoices;
+            }
+        });
+
+        function loadVoices() {
+            // هذه الدالة تضمن تحميل الأصوات قبل الحاجة إليها
+            const voices = window.speechSynthesis.getVoices();
+            console.log("الأصوات المتاحة:", voices);
+        }
+
+        function displayQuestions() {
+            const structureContainer = document.getElementById('structure-container');
+            structureQuestions.forEach((q, index) => {
+                createQuestionElement(structureContainer, q, index, 'structure');
+            });
+
+            const readingContainer = document.getElementById('reading-container');
+            readingData.forEach((section, sectionIndex) => {
+                const passageDiv = document.createElement('div');
+                passageDiv.className = 'reading-passage';
+                passageDiv.innerHTML = `<p>${section.passage}</p>`;
+                readingContainer.appendChild(passageDiv);
+
+                section.questions.forEach((q, qIndex) => {
+                    createQuestionElement(readingContainer, q, qIndex + (sectionIndex * 4), 'reading');
+                });
+            });
+
+            const listeningContainer = document.getElementById('listening-container');
+            listeningQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.id = `listening-question-${index}`;
+                
+                questionDiv.innerHTML = `
+                    <div class="hidden-audio-text">${q.audioText}</div>
+                    <div class="tts-container">
+                        <button class="play-btn" onclick="speakText(this.parentNode.previousElementSibling.textContent)">
+                            تشغيل السؤال ${index + 1}
+                        </button>
+                        <div class="audio-controls">
+                            <button class="control-btn" onclick="speakText(this.parentNode.parentNode.previousElementSibling.textContent)">
+                                إعادة
+                            </button>
+                            <button class="control-btn" onclick="window.speechSynthesis.cancel()">
+                                إيقاف
+                            </button>
+                        </div>
+                    </div>
+                    <p>${q.question}</p>
+                    <div class="options">
+                        ${q.options.map((option, i) => `
+                            <div class="option">
+                                <input type="radio" name="listening-${index}" id="listening-${index}-${i}" value="${i}">
+                                <label for="listening-${index}-${i}">${option}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <span class="show-explanation" onclick="toggleExplanation('listening-${index}')">عرض الشرح</span>
+                    <div class="explanation" id="explanation-listening-${index}">${q.explanation}</div>
+                `;
+                
+                listeningContainer.appendChild(questionDiv);
+            });
+        }
+
+        function createQuestionElement(container, q, index, section) {
+            if (section === 'listening') return; // تم التعامل معها في displayQuestions
+            
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            questionDiv.id = `${section}-question-${index}`;
+
+            questionDiv.innerHTML = `
+                <p>${q.question}</p>
+                <div class="options">
+                    ${q.options.map((option, i) => `
+                        <div class="option">
+                            <input type="radio" name="${section}-${index}" id="${section}-${index}-${i}" value="${i}">
+                            <label for="${section}-${index}-${i}">${option}</label>
+                        </div>
+                    `).join('')}
+                </div>
+                <span class="show-explanation" onclick="toggleExplanation('${section}-${index}')">عرض الشرح</span>
+                <div class="explanation" id="explanation-${section}-${index}">${q.explanation}</div>
+            `;
+
+            container.appendChild(questionDiv);
+        }
+
+        function toggleExplanation(id) {
+            const explanation = document.getElementById(`explanation-${id}`);
+            explanation.style.display = explanation.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function openSection(evt, sectionName) {
+            const tabcontent = document.getElementsByClassName('tabcontent');
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = 'none';
+            }
+
+            const tablinks = document.getElementsByClassName('tablinks');
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(' active', '');
+            }
+
+            document.getElementById(sectionName).style.display = 'block';
+            evt.currentTarget.className += ' active';
+        }
+
+        function calculateScore() {
+            let structureScore = 0;
+            let readingScore = 0;
+            let listeningScore = 0;
+
+            // حساب نتيجة Structure
+            structureQuestions.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="structure-${index}"]:checked`);
+                const questionDiv = document.getElementById(`structure-question-${index}`);
+
+                if (selectedOption && parseInt(selectedOption.value) === q.correctAnswer) {
+                    structureScore++;
+                    questionDiv.style.borderLeft = '4px solid #2e7d32';
+                } else {
+                    questionDiv.style.borderLeft = '4px solid #c62828';
+                }
+                document.getElementById(`explanation-structure-${index}`).style.display = 'block';
+            });
+
+            // حساب نتيجة Reading
+            let readingIndex = 0;
+            readingData.forEach(section => {
+                section.questions.forEach(q => {
+                    const selectedOption = document.querySelector(`input[name="reading-${readingIndex}"]:checked`);
+                    const questionDiv = document.getElementById(`reading-question-${readingIndex}`);
+
+                    if (selectedOption && parseInt(selectedOption.value) === q.correctAnswer) {
+                        readingScore++;
+                        questionDiv.style.borderLeft = '4px solid #2e7d32';
+                    } else {
+                        questionDiv.style.borderLeft = '4px solid #c62828';
+                    }
+                    document.getElementById(`explanation-reading-${readingIndex}`).style.display = 'block';
+                    readingIndex++;
+                });
+            });
+
+            // حساب نتيجة Listening
+            listeningQuestions.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="listening-${index}"]:checked`);
+                const questionDiv = document.getElementById(`listening-question-${index}`);
+
+                if (selectedOption && parseInt(selectedOption.value) === q.correctAnswer) {
+                    listeningScore++;
+                    questionDiv.style.borderLeft = '4px solid #2e7d32';
+                } else {
+                    questionDiv.style.borderLeft = '4px solid #c62828';
+                }
+                document.getElementById(`explanation-listening-${index}`).style.display = 'block';
+            });
+
+            // عرض النتيجة النهائية
+            const totalScore = structureScore + readingScore + listeningScore;
+            const percentage = (totalScore / 50) * 100;
+            const resultDiv = document.getElementById('result');
+            
+            resultDiv.innerHTML = `
+                <p>النتيجة النهائية: ${totalScore} / 50</p>
+                <p>النسبة المئوية: ${percentage.toFixed(1)}%</p>
+                <p>Structure: ${structureScore} / 20</p>
+                <p>Reading: ${readingScore} / 20</p>
+                <p>Listening: ${listeningScore} / 10</p>
+            `;
+            
+            resultDiv.style.display = 'block';
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // جعل الدوال متاحة على النطاق العام
+        window.toggleExplanation = toggleExplanation;
+        window.openSection = openSection;
+        window.calculateScore = calculateScore;
+        window.speakText = speakText;
+    </script>
+</body>
+</html>
