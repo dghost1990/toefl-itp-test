@@ -321,6 +321,30 @@
             border: 1px solid #ddd;
             cursor: pointer;
         }
+        
+        /* تنسيقات جديدة */
+        .score-section {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-radius: 5px;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -423,7 +447,7 @@
 
         // Structure and Written Expression (120 سؤالاً)
         const structureQuestions = [
-            {
+           {
     question: "1. ____ the light rain, the baseball game continued.",
     options: ["A) Although", "B) Even though", "C) Despite", "D) Because"],
     correctAnswer: 2,
@@ -1291,7 +1315,8 @@
                         explanation: "الإجابة الصحيحة: C) Leonardo da Vinci<br><br>الشرح: النص يذكر ليوناردو دا فينشي كأحد أعلام عصر النهضة."
                     }
                 ]
-            }
+            },
+            // ... (بقية المقاطع بنفس الهيكل)
         ];
 
         // Listening Comprehension (10 أسئلة)
@@ -1400,19 +1425,40 @@
         // عرض الأسئلة عند تحميل الصفحة
         window.onload = function() {
             displayQuestions();
+            // تحميل الأصوات عند بدء الصفحة
+            if ('speechSynthesis' in window) {
+                speechSynthesis.onvoiceschanged = function() {
+                    console.log("الأصوات جاهزة");
+                };
+            }
         };
 
-        function loadVoices() {
-            const voices = window.speechSynthesis.getVoices();
-            console.log("الأصوات المتاحة:", voices);
-        }
-
         function displayQuestions() {
+            // عرض أسئلة Structure
             const structureContainer = document.getElementById('structure-container');
             structureQuestions.forEach((q, index) => {
-                createQuestionElement(structureContainer, q, index, 'structure');
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.id = `structure-question-${index}`;
+                
+                let optionsHTML = q.options.map((option, i) => `
+                    <div class="option">
+                        <input type="radio" name="structure-${index}" id="structure-${index}-${i}" value="${i}">
+                        <label for="structure-${index}-${i}">${option}</label>
+                    </div>
+                `).join('');
+                
+                questionDiv.innerHTML = `
+                    <p>${q.question}</p>
+                    <div class="options">${optionsHTML}</div>
+                    <span class="show-explanation" onclick="toggleExplanation('structure-${index}')">عرض الشرح</span>
+                    <div class="explanation" id="explanation-structure-${index}">${q.explanation}</div>
+                `;
+                
+                structureContainer.appendChild(questionDiv);
             });
 
+            // عرض أسئلة Reading
             const readingContainer = document.getElementById('reading-container');
             readingData.forEach((section, sectionIndex) => {
                 const passageDiv = document.createElement('div');
@@ -1421,24 +1467,51 @@
                 readingContainer.appendChild(passageDiv);
 
                 section.questions.forEach((q, qIndex) => {
-                    createQuestionElement(readingContainer, q, qIndex + (sectionIndex * 4), 'reading');
+                    const globalIndex = sectionIndex * section.questions.length + qIndex;
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'question';
+                    questionDiv.id = `reading-question-${globalIndex}`;
+                    
+                    let optionsHTML = q.options.map((option, i) => `
+                        <div class="option">
+                            <input type="radio" name="reading-${globalIndex}" id="reading-${globalIndex}-${i}" value="${i}">
+                            <label for="reading-${globalIndex}-${i}">${option}</label>
+                        </div>
+                    `).join('');
+                    
+                    questionDiv.innerHTML = `
+                        <p>${q.question}</p>
+                        <div class="options">${optionsHTML}</div>
+                        <span class="show-explanation" onclick="toggleExplanation('reading-${globalIndex}')">عرض الشرح</span>
+                        <div class="explanation" id="explanation-reading-${globalIndex}">${q.explanation}</div>
+                    `;
+                    
+                    readingContainer.appendChild(questionDiv);
                 });
             });
 
+            // عرض أسئلة Listening
             const listeningContainer = document.getElementById('listening-container');
             listeningQuestions.forEach((q, index) => {
                 const questionDiv = document.createElement('div');
                 questionDiv.className = 'question';
                 questionDiv.id = `listening-question-${index}`;
                 
+                let optionsHTML = q.options.map((option, i) => `
+                    <div class="option">
+                        <input type="radio" name="listening-${index}" id="listening-${index}-${i}" value="${i}">
+                        <label for="listening-${index}-${i}">${option}</label>
+                    </div>
+                `).join('');
+                
                 questionDiv.innerHTML = `
                     <div class="hidden-audio-text">${q.audioText}</div>
                     <div class="tts-container">
-                        <button class="play-btn" onclick="speakText(this.parentNode.previousElementSibling.textContent)">
+                        <button class="play-btn" onclick="speakText('${q.audioText.replace(/'/g, "\\'")}')">
                             تشغيل السؤال ${index + 1}
                         </button>
                         <div class="audio-controls">
-                            <button class="control-btn" onclick="speakText(this.parentNode.parentNode.previousElementSibling.textContent)">
+                            <button class="control-btn" onclick="speakText('${q.audioText.replace(/'/g, "\\'")}')">
                                 إعادة
                             </button>
                             <button class="control-btn" onclick="window.speechSynthesis.cancel()">
@@ -1447,14 +1520,7 @@
                         </div>
                     </div>
                     <p>${q.question}</p>
-                    <div class="options">
-                        ${q.options.map((option, i) => `
-                            <div class="option">
-                                <input type="radio" name="listening-${index}" id="listening-${index}-${i}" value="${i}">
-                                <label for="listening-${index}-${i}">${option}</label>
-                            </div>
-                        `).join('')}
-                    </div>
+                    <div class="options">${optionsHTML}</div>
                     <span class="show-explanation" onclick="toggleExplanation('listening-${index}')">عرض الشرح</span>
                     <div class="explanation" id="explanation-listening-${index}">${q.explanation}</div>
                 `;
@@ -1463,33 +1529,11 @@
             });
         }
 
-        function createQuestionElement(container, q, index, section) {
-            if (section === 'listening') return;
-            
-            const questionDiv = document.createElement('div');
-            questionDiv.className = 'question';
-            questionDiv.id = `${section}-question-${index}`;
-
-            questionDiv.innerHTML = `
-                <p>${q.question}</p>
-                <div class="options">
-                    ${q.options.map((option, i) => `
-                        <div class="option">
-                            <input type="radio" name="${section}-${index}" id="${section}-${index}-${i}" value="${i}">
-                            <label for="${section}-${index}-${i}">${option}</label>
-                        </div>
-                    `).join('')}
-                </div>
-                <span class="show-explanation" onclick="toggleExplanation('${section}-${index}')">عرض الشرح</span>
-                <div class="explanation" id="explanation-${section}-${index}">${q.explanation}</div>
-            `;
-
-            container.appendChild(questionDiv);
-        }
-
         function toggleExplanation(id) {
             const explanation = document.getElementById(`explanation-${id}`);
-            explanation.style.display = explanation.style.display === 'block' ? 'none' : 'block';
+            if (explanation) {
+                explanation.style.display = explanation.style.display === 'block' ? 'none' : 'block';
+            }
         }
 
         function openSection(evt, sectionName) {
@@ -1519,11 +1563,12 @@
 
                 if (selectedOption && parseInt(selectedOption.value) === q.correctAnswer) {
                     structureScore++;
-                    questionDiv.style.borderLeft = '4px solid #2e7d32';
+                    if (questionDiv) questionDiv.style.borderLeft = '4px solid #2e7d32';
                 } else {
-                    questionDiv.style.borderLeft = '4px solid #c62828';
+                    if (questionDiv) questionDiv.style.borderLeft = '4px solid #c62828';
                 }
-                document.getElementById(`explanation-structure-${index}`).style.display = 'block';
+                const explanation = document.getElementById(`explanation-structure-${index}`);
+                if (explanation) explanation.style.display = 'block';
             });
 
             // حساب نتيجة Reading
@@ -1535,11 +1580,12 @@
 
                     if (selectedOption && parseInt(selectedOption.value) === q.correctAnswer) {
                         readingScore++;
-                        questionDiv.style.borderLeft = '4px solid #2e7d32';
+                        if (questionDiv) questionDiv.style.borderLeft = '4px solid #2e7d32';
                     } else {
-                        questionDiv.style.borderLeft = '4px solid #c62828';
+                        if (questionDiv) questionDiv.style.borderLeft = '4px solid #c62828';
                     }
-                    document.getElementById(`explanation-reading-${readingIndex}`).style.display = 'block';
+                    const explanation = document.getElementById(`explanation-reading-${readingIndex}`);
+                    if (explanation) explanation.style.display = 'block';
                     readingIndex++;
                 });
             });
@@ -1551,11 +1597,12 @@
 
                 if (selectedOption && parseInt(selectedOption.value) === q.correctAnswer) {
                     listeningScore++;
-                    questionDiv.style.borderLeft = '4px solid #2e7d32';
+                    if (questionDiv) questionDiv.style.borderLeft = '4px solid #2e7d32';
                 } else {
-                    questionDiv.style.borderLeft = '4px solid #c62828';
+                    if (questionDiv) questionDiv.style.borderLeft = '4px solid #c62828';
                 }
-                document.getElementById(`explanation-listening-${index}`).style.display = 'block';
+                const explanation = document.getElementById(`explanation-listening-${index}`);
+                if (explanation) explanation.style.display = 'block';
             });
 
             // عرض النتيجة النهائية
@@ -1564,11 +1611,22 @@
             const resultDiv = document.getElementById('result');
             
             resultDiv.innerHTML = `
-                <p>النتيجة النهائية: ${totalScore} / 150</p>
-                <p>النسبة المئوية: ${percentage.toFixed(1)}%</p>
-                <p>Structure: ${structureScore} / 120</p>
-                <p>Reading: ${readingScore} / 20</p>
-                <p>Listening: ${listeningScore} / 10</p>
+                <h3>النتيجة النهائية</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: ${percentage}%">${percentage.toFixed(1)}%</div>
+                </div>
+                
+                <div class="score-section">
+                    <p>إجمالي النقاط: <strong>${totalScore} / 150</strong></p>
+                    <p>النسبة المئوية: <strong>${percentage.toFixed(1)}%</strong></p>
+                </div>
+                
+                <div class="score-section">
+                    <h4>تفصيل النتائج:</h4>
+                    <p>Structure: ${structureScore} / 120 (${(structureScore/120*100).toFixed(1)}%)</p>
+                    <p>Reading: ${readingScore} / 20 (${(readingScore/20*100).toFixed(1)}%)</p>
+                    <p>Listening: ${listeningScore} / 10 (${(listeningScore/10*100).toFixed(1)}%)</p>
+                </div>
             `;
             
             resultDiv.style.display = 'block';
