@@ -3,8 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار التوفل ITP l - </title>
+    <title>TOEFL ITP Test</title>
     <style>
+        /* تنسيق رأس الصفحة - معدل */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 10px;
+            animation: bounceIn 1s ease-out;
+        }
+        
+        .logo {
+            height: 80px;
+            width: auto;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2)) brightness(1.05);
+            border-radius: 12px;
+            padding: 8px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .logo:hover {
+            transform: scale(1.08) rotate(2deg);
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3)) contrast(1.1);
+        }
+        
+        /* تأثير الارتداد */
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* تنسيق المؤقت */
+        .timer-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        
+        #timer-container {
+            text-align: center;
+            padding: 10px;
+            background: #f0f8ff;
+            border-radius: 8px;
+            border: 2px solid #006400;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        
+        #timer {
+            font-size: 28px;
+            font-weight: bold;
+            color: #006400;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .timer-buttons {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .timer-btn {
+            padding: 8px 15px;
+            margin: 0 5px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        
+        .timer-btn:hover {
+            background: #2980b9;
+        }
+        
+        .timer-btn.stop {
+            background: #e74c3c;
+        }
+        
+        .timer-btn.stop:hover {
+            background: #c0392b;
+        }
+        
+        /* باقي التنسيقات */
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
@@ -12,6 +113,7 @@
             padding: 20px;
             background-color: #f5f5f5;
         }
+        
         .container {
             max-width: 1000px;
             margin: 0 auto;
@@ -20,23 +122,28 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
+        
         h1 {
             color: #2c3e50;
             text-align: center;
             margin-bottom: 30px;
+            width: 100%;
         }
+        
         h2 {
             color: #3498db;
             border-bottom: 2px solid #3498db;
             padding-bottom: 10px;
             margin-top: 40px;
         }
+        
         .section-info {
             background: #e3f2fd;
             padding: 15px;
             border-radius: 5px;
             margin-bottom: 20px;
         }
+        
         .question {
             margin-bottom: 25px;
             padding: 15px;
@@ -44,21 +151,26 @@
             border-radius: 5px;
             border-left: 4px solid #3498db;
         }
+        
         .options {
             margin-right: 20px;
         }
+        
         .option {
             margin-bottom: 10px;
             padding: 8px;
             border-radius: 4px;
             transition: background 0.3s;
         }
+        
         .option:hover {
             background: #e3f2fd;
         }
+        
         input[type="radio"] {
             margin-left: 10px;
         }
+        
         button {
             display: block;
             width: 200px;
@@ -72,9 +184,11 @@
             font-size: 18px;
             transition: background 0.3s;
         }
+        
         button:hover {
             background: #2980b9;
         }
+        
         #result {
             text-align: center;
             font-size: 22px;
@@ -85,12 +199,15 @@
             display: none;
             background: #f8f9fa;
         }
+        
         .correct {
             color: #2e7d32;
         }
+        
         .wrong {
             color: #c62828;
         }
+        
         .explanation {
             display: none;
             margin-top: 15px;
@@ -99,6 +216,7 @@
             border-radius: 5px;
             border-right: 3px solid #4caf50;
         }
+        
         .show-explanation {
             color: #0277bd;
             cursor: pointer;
@@ -106,9 +224,11 @@
             margin-top: 10px;
             display: inline-block;
         }
+        
         .show-explanation:hover {
             text-decoration: underline;
         }
+        
         .reading-passage {
             background: #fff8e1;
             padding: 15px;
@@ -116,6 +236,7 @@
             margin-bottom: 20px;
             border-left: 4px solid #ffa000;
         }
+        
         .tab {
             overflow: hidden;
             border: 1px solid #ccc;
@@ -123,6 +244,7 @@
             border-radius: 5px;
             margin-bottom: 20px;
         }
+        
         .tab button {
             float: right;
             border: none;
@@ -135,13 +257,16 @@
             margin: 5px;
             border-radius: 3px;
         }
+        
         .tab button:hover {
             background-color: #ddd;
         }
+        
         .tab button.active {
             background-color: #3498db;
             color: white;
         }
+        
         .tabcontent {
             display: none;
             padding: 6px 12px;
@@ -150,14 +275,17 @@
             border-radius: 0 0 5px 5px;
             animation: fadeEffect 1s;
         }
+        
         @keyframes fadeEffect {
             from {opacity: 0;}
             to {opacity: 1;}
         }
+        
         .tts-container {
             text-align: center;
             margin: 20px 0;
         }
+        
         .play-btn {
             background: #4285f4;
             color: white;
@@ -170,18 +298,22 @@
             display: block;
             width: 150px;
         }
+        
         .play-btn:hover {
             background: #3367d6;
         }
+        
         .hidden-audio-text {
             display: none;
         }
+        
         .audio-controls {
             display: flex;
             justify-content: center;
             gap: 10px;
             margin-top: 10px;
         }
+        
         .control-btn {
             padding: 5px 10px;
             border-radius: 4px;
@@ -193,10 +325,27 @@
 </head>
 <body>
     <div class="container">
-        <h1>اختبار التوفل ITP  - </h1>
+        <!-- رأس الصفحة مع الشعار والمؤقت -->
+        <div class="header">
+            <div class="logo-container">
+                <img src="https://i.postimg.cc/R6Xj8PRc/logo.png" alt="شعار اختبار التوفل" class="logo">
+            </div>
+            
+            <div class="timer-controls">
+                <div id="timer-container">
+                    <div id="timer">00:00:00</div>
+                </div>
+                <div class="timer-buttons">
+                    <button class="timer-btn" onclick="startTimer()">بدء</button>
+                    <button class="timer-btn stop" onclick="stopTimer()">إيقاف</button>
+                </div>
+            </div>
+        </div>
+        
+        <h1>TOEFL ITP Test</h1>
         
         <div class="tab">
-            <button class="tablinks active" onclick="openSection(event, 'structure')">Structure (20 سؤالاً)</button>
+            <button class="tablinks active" onclick="openSection(event, 'structure')">Structure (120 سؤالاً)</button>
             <button class="tablinks" onclick="openSection(event, 'reading')">Reading (20 سؤالاً)</button>
             <button class="tablinks" onclick="openSection(event, 'listening')">Listening (10 أسئلة)</button>
         </div>
@@ -231,274 +380,915 @@
     </div>
 
     <script>
-        // Structure and Written Expression (20 سؤالاً)
+        // متغيرات المؤقت
+        let seconds = 0;
+        let minutes = 0;
+        let hours = 0;
+        let timerInterval;
+        let timerRunning = false;
+        
+        // دالة تحديث المؤقت
+        function updateTimer() {
+            seconds++;
+            
+            if (seconds >= 60) {
+                seconds = 0;
+                minutes++;
+            }
+            
+            if (minutes >= 60) {
+                minutes = 0;
+                hours++;
+            }
+            
+            document.getElementById('timer').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // بدء المؤقت
+        function startTimer() {
+            if (!timerRunning) {
+                timerInterval = setInterval(updateTimer, 1000);
+                timerRunning = true;
+                document.getElementById('timer').style.color = '#006400';
+            }
+        }
+        
+        // إيقاف المؤقت
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            document.getElementById('timer').style.color = '#8b0000';
+        }
+
+        // Structure and Written Expression (120 سؤالاً)
         const structureQuestions = [
             {
-                question: "1. By the time we arrived, the movie __________.",
-                options: ["A) already started", "B) has already started", "C) had already started", "D) would start"],
-                correctAnswer: 2,
-                explanation: "الإجابة الصحيحة: C) had already started<br><br>الشرح: نستخدم past perfect للحدث الذي تم قبل حدث آخر في الماضي."
-            },
-            {
-                question: "2. Neither the students nor the teacher __________ about the change in schedule.",
-                options: ["A) know", "B) knows", "C) knowing", "D) have known"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) knows<br><br>الشرح: مع 'neither...nor' الفعل يتفق مع أقرب فاعل (teacher مفرد)."
-            },
-            {
-                question: "3. She suggested that he __________ a doctor immediately.",
-                options: ["A) sees", "B) see", "C) saw", "D) would see"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) see<br><br>الشرح: بعد أفعال مثل suggest/recommend نستخدم المصدر دون 'to'."
-            },
-            {
-                question: "4. The report __________ by the research team last month.",
-                options: ["A) was completed", "B) completed", "C) has completed", "D) had completed"],
-                correctAnswer: 0,
-                explanation: "الإجابة الصحيحة: A) was completed<br><br>الشرح: الجملة مبنية للمجهول في الماضي البسيط."
-            },
-            {
-                question: "5. If I __________ you, I would reconsider that decision.",
-                options: ["A) am", "B) was", "C) were", "D) have been"],
-                correctAnswer: 2,
-                explanation: "الإجابة الصحيحة: C) were<br><br>الشرح: جملة شرطية غير واقعية (Type 2) - نستخدم 'were' لجميع الضمائر."
-            },
-            {
-                question: "6. The committee __________ on this issue for several hours.",
-                options: ["A) debate", "B) debates", "C) are debating", "D) have debated"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) debates<br><br>الشرح: كلمة committee تعتبر مفردة هنا."
-            },
-            {
-                question: "7. Not only the students but also the professor __________ attending the conference.",
-                options: ["A) is", "B) are", "C) were", "D) have been"],
-                correctAnswer: 0,
-                explanation: "الإجابة الصحيحة: A) is<br><br>الشرح: الفعل يتفق مع أقرب فاعل (professor مفرد)."
-            },
-            {
-                question: "8. She __________ her keys at least three times this week.",
-                options: ["A) loses", "B) lost", "C) has lost", "D) had lost"],
-                correctAnswer: 2,
-                explanation: "الإجابة الصحيحة: C) has lost<br><br>الشرح: مع 'this week' نستخدم present perfect."
-            },
-            {
-                question: "9. The results of the experiment __________ surprising.",
-                options: ["A) was", "B) were", "C) has been", "D) is"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) were<br><br>الشرح: الفاعل 'results' جمع ويحتاج فعل جمع."
-            },
-            {
-                question: "10. He made his children __________ their homework before dinner.",
-                options: ["A) to finish", "B) finish", "C) finishing", "D) finished"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) finish<br><br>الشرح: بعد 'made' نستخدم المصدر دون 'to'."
-            },
-            {
-                question: "11. The proposal __________ by the board of directors tomorrow.",
-                options: ["A) will discuss", "B) will be discussed", "C) is discussing", "D) discusses"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) will be discussed<br><br>الشرح: جملة مبنية للمجهول للمستقبل."
-            },
-            {
-                question: "12. Hardly __________ when the phone rang.",
-                options: ["A) he had arrived", "B) had he arrived", "C) he arrived", "D) did he arrive"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) had he arrived<br><br>الشرح: مع 'hardly' نستخدم past perfect وانعكاس الفاعل والفعل."
-            },
-            {
-                question: "13. She is one of those people who __________ always punctual.",
-                options: ["A) is", "B) are", "C) was", "D) has been"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) are<br><br>الشرح: الفعل يتفق مع 'people' (جمع) وليس 'one'."
-            },
-            {
-                question: "14. The number of students in the class __________ increased this semester.",
-                options: ["A) have", "B) has", "C) are", "D) is"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) has<br><br>الشرح: 'The number' تعتبر فاعل مفرد."
-            },
-            {
-                question: "15. If she __________ earlier, she wouldn't have missed the train.",
-                options: ["A) left", "B) had left", "C) would leave", "D) leaves"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) had left<br><br>الشرح: جملة شرطية من النوع الثالث (لحدث في الماضي)."
-            },
-            {
-                question: "16. The teacher demanded that the assignment __________ on time.",
-                options: ["A) is submitted", "B) be submitted", "C) was submitted", "D) would be submitted"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) be submitted<br><br>الشرح: بعد 'demanded that' نستخدم subjunctive mood."
-            },
-            {
-                question: "17. Neither of the options __________ acceptable to the committee.",
-                options: ["A) are", "B) is", "C) were", "D) have been"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) is<br><br>الشرح: 'Neither' تعتبر فاعل مفرد."
-            },
-            {
-                question: "18. The company, along with its subsidiaries, __________ to expand next year.",
-                options: ["A) plan", "B) plans", "C) are planning", "D) have planned"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) plans<br><br>الشرح: الفاعل الرئيسي هو 'company' (مفرد)."
-            },
-            {
-                question: "19. Scarcely __________ the door when the alarm went off.",
-                options: ["A) he had closed", "B) had he closed", "C) he closed", "D) did he close"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) had he closed<br><br>الشرح: مع 'scarcely' نستخدم past perfect وانعكاس الفاعل والفعل."
-            },
-            {
-                question: "20. The data __________ inconclusive at this point.",
-                options: ["A) is", "B) are", "C) was", "D) were"],
-                correctAnswer: 0,
-                explanation: "الإجابة الصحيحة: A) is<br><br>الشرح: 'data' تعتبر مفردة في هذا السياق."
-            }
+    question: "1. ____ the light rain, the baseball game continued.",
+    options: ["A) Although", "B) Even though", "C) Despite", "D) Because"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) Despite<br><br>الشرح: 'Despite' يليها اسم أو عبارة اسمية، مثل 'the light rain'."
+},
+{
+    question: "2. She ____ to school every day.",
+    options: ["A) go", "B) going", "C) goes", "D) gone"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) goes<br><br>الشرح: الفعل في المضارع البسيط مع 'she' يأخذ s في نهايته."
+},
+{
+    question: "3. I have been living here ____ five years.",
+    options: ["A) since", "B) for", "C) from", "D) during"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) for<br><br>الشرح: 'for' تُستخدم مع فترة زمنية، مثل 'five years'."
+},
+{
+    question: "4. If I ____ you, I would apologize.",
+    options: ["A) was", "B) were", "C) am", "D) be"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) were<br><br>الشرح: في الجمل الشرطية من النوع الثاني نستخدم 'were' مع جميع الضمائر."
+},
+{
+    question: "5. The book ____ on the table.",
+    options: ["A) is", "B) are", "C) were", "D) be"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) is<br><br>الشرح: الفاعل مفرد 'the book' لذلك نستخدم 'is'."
+},
+{
+    question: "6. We ____ dinner when the phone rang.",
+    options: ["A) had", "B) were having", "C) have", "D) has"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) were having<br><br>الشرح: نستخدم الماضي المستمر للتعبير عن حدث كان مستمراً عندما قاطعته حادثة أخرى."
+},
+{
+    question: "7. This is the man ____ car was stolen.",
+    options: ["A) who", "B) whom", "C) which", "D) whose"],
+    correctAnswer: 3,
+    explanation: "الإجابة الصحيحة: D) whose<br><br>الشرح: 'whose' تُستخدم للدلالة على الملكية."
+},
+{
+    question: "8. Not only ____ late, but he also forgot his homework.",
+    options: ["A) he was", "B) was he", "C) he is", "D) is he"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) was he<br><br>الشرح: بعد 'Not only' يأتي تركيب مقلوب (فعل ثم فاعل)."
+},
+{
+    question: "9. I don't have ____ money left.",
+    options: ["A) some", "B) many", "C) any", "D) few"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) any<br><br>الشرح: 'any' تُستخدم في الجمل المنفية."
+},
+{
+    question: "10. He is ____ than his brother.",
+    options: ["A) taller", "B) more tall", "C) tallest", "D) tall"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) taller<br><br>الشرح: نستخدم صيغة المقارنة -er مع الصفات القصيرة."
+},
+{
+    question: "11. A lot of tourists visit Paris ____ the summer.",
+    options: ["A) at", "B) on", "C) in", "D) by"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) in<br><br>الشرح: نستخدم 'in' مع الأشهر والفصول."
+},
+{
+    question: "12. She speaks English ____ than I do.",
+    options: ["A) good", "B) more good", "C) better", "D) best"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) better<br><br>الشرح: 'better' هي صيغة المقارنة الشاذة لـ 'good'."
+},
+{
+    question: "13. He has lived in London ____ 2015.",
+    options: ["A) for", "B) from", "C) since", "D) during"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) since<br><br>الشرح: 'since' تُستخدم مع نقطة بداية زمنية محددة."
+},
+{
+    question: "14. Neither the teacher nor the students ____ in the room.",
+    options: ["A) is", "B) are", "C) were", "D) be"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) are<br><br>الشرح: في 'neither...nor' يتبع الفعل الجزء الأقرب من الفاعل."
+},
+{
+    question: "15. He will call you when he ____ home.",
+    options: ["A) gets", "B) got", "C) will get", "D) get"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) gets<br><br>الشرح: في الجمل الزمنية، نستخدم المضارع البسيط مع 'when'."
+},
+{
+    question: "16. I prefer tea ____ coffee.",
+    options: ["A) than", "B) from", "C) over", "D) to"],
+    correctAnswer: 3,
+    explanation: "الإجابة الصحيحة: D) to<br><br>الشرح: نستخدم 'prefer X to Y'."
+},
+{
+    question: "17. She can't afford ____ a new car.",
+    options: ["A) buy", "B) to buy", "C) buying", "D) bought"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) to buy<br><br>الشرح: 'afford' يتبعها مصدر مع 'to'."
+},
+{
+    question: "18. The cake was ____ by my mother.",
+    options: ["A) make", "B) made", "C) making", "D) makes"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) made<br><br>الشرح: صيغة المبني للمجهول في الماضي البسيط: was + past participle."
+},
+{
+    question: "19. He apologized ____ being late.",
+    options: ["A) for", "B) of", "C) about", "D) to"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) for<br><br>الشرح: 'apologize for' تُستخدم مع الأفعال أو الأسماء."
+},
+{
+    question: "20. It's important ____ learn English.",
+    options: ["A) to", "B) that", "C) to be", "D) to"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) to<br><br>الشرح: بعد الصفات مثل 'important' يأتي مصدر مع 'to'."
+},
+{
+    question: "21. He usually ____ up at 7 AM.",
+    options: ["A) get", "B) gets", "C) getting", "D) got"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) gets<br><br>الشرح: مع الفاعل المفرد 'he' نستخدم 'gets' في المضارع البسيط."
+},
+{
+    question: "22. By the time we arrived, the movie ____.",
+    options: ["A) starts", "B) started", "C) had started", "D) has started"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) had started<br><br>الشرح: نستخدم الماضي التام للتعبير عن حدث وقع قبل حدث آخر في الماضي."
+},
+{
+    question: "23. This is the house ____ I grew up.",
+    options: ["A) when", "B) which", "C) where", "D) what"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) where<br><br>الشرح: 'where' تُستخدم للدلالة على المكان."
+},
+{
+    question: "24. I saw him ____ the building.",
+    options: ["A) enter", "B) entered", "C) entering", "D) to enter"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) enter<br><br>الشرح: بعد أفعال الحواس نستخدم المصدر بدون 'to'."
+},
+{
+    question: "25. The book is ____ interesting than the movie.",
+    options: ["A) more", "B) most", "C) much", "D) many"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) more<br><br>الشرح: نستخدم 'more' للمقارنة مع الصفات الطويلة مثل 'interesting'."
+},
+{
+    question: "26. He didn't know ____ to say.",
+    options: ["A) what", "B) which", "C) who", "D) that"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) what<br><br>الشرح: نستخدم 'what' للسؤال عن شيء غير معروف تحديدًا."
+},
+{
+    question: "27. I have never seen ____ elephant before.",
+    options: ["A) a", "B) an", "C) the", "D) one"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) an<br><br>الشرح: نستخدم 'an' قبل الكلمات التي تبدأ بحرف صوتي."
+},
+{
+    question: "28. He is interested ____ learning Spanish.",
+    options: ["A) to", "B) in", "C) on", "D) at"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) in<br><br>الشرح: 'interested in' هو التعبير الصحيح."
+},
+{
+    question: "29. There isn’t ____ milk left in the fridge.",
+    options: ["A) some", "B) much", "C) many", "D) a few"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) much<br><br>الشرح: 'milk' اسم غير معدود، نستخدم معه 'much' في النفي."
+},
+{
+    question: "30. How long ____ you lived here?",
+    options: ["A) do", "B) did", "C) have", "D) had"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) have<br><br>الشرح: نستخدم المضارع التام للسؤال عن مدة مستمرة حتى الآن."
+},
+{
+    question: "31. He was tired ____ he had worked all day.",
+    options: ["A) so", "B) because", "C) but", "D) although"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) because<br><br>الشرح: 'because' تُستخدم لتوضيح السبب."
+},
+{
+    question: "32. If she ____ earlier, she wouldn’t have missed the train.",
+    options: ["A) leave", "B) left", "C) had left", "D) leaves"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) had left<br><br>الشرح: هذا شرط من النوع الثالث (حدث لم يقع)."
+},
+{
+    question: "33. That was the ____ movie I’ve ever seen.",
+    options: ["A) bad", "B) worse", "C) worst", "D) badly"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) worst<br><br>الشرح: 'worst' هي صيغة التفضيل من 'bad'."
+},
+{
+    question: "34. I will help you after I ____ my homework.",
+    options: ["A) finish", "B) finished", "C) will finish", "D) finishes"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) finish<br><br>الشرح: بعد أدوات الزمن المستقبلية نستخدم المضارع البسيط."
+},
+{
+    question: "35. There are too ____ people in the room.",
+    options: ["A) much", "B) many", "C) more", "D) most"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) many<br><br>الشرح: 'people' اسم جمع نستخدم معه 'many'."
+},
+{
+    question: "36. Would you mind ____ the window?",
+    options: ["A) close", "B) to close", "C) closing", "D) closed"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) closing<br><br>الشرح: بعد 'Would you mind' يأتي فعل بإضافة ing."
+},
+{
+    question: "37. The teacher asked if we ____ our homework.",
+    options: ["A) do", "B) did", "C) have done", "D) had done"],
+    correctAnswer: 3,
+    explanation: "الإجابة الصحيحة: D) had done<br><br>الشرح: في الكلام غير المباشر نستخدم الماضي التام."
+},
+{
+    question: "38. He plays tennis ____ than his brother.",
+    options: ["A) more well", "B) weller", "C) better", "D) best"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) better<br><br>الشرح: 'better' هي المقارنة الصحيحة للفعل 'well'."
+},
+{
+    question: "39. ____ I was tired, I finished the work.",
+    options: ["A) Although", "B) Because", "C) Despite", "D) However"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) Although<br><br>الشرح: تُستخدم لربط جملتين متضادتين."
+},
+{
+    question: "40. I’m looking forward to ____ from you.",
+    options: ["A) hear", "B) hearing", "C) heard", "D) be hearing"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) hearing<br><br>الشرح: بعد 'look forward to' نستخدم الفعل + ing."
+},
+{
+    question: "41. She sings as ____ as a professional.",
+    options: ["A) good", "B) well", "C) better", "D) best"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) well<br><br>الشرح: 'well' هي الحال المناسب للفعل 'sings'."
+},
+{
+    question: "42. If I were you, I ____ take the job.",
+    options: ["A) will", "B) would", "C) can", "D) shall"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) would<br><br>الشرح: في الحالة الثانية الشرطية نستخدم 'would + base verb'."
+},
+{
+    question: "43. She has been working here ____ 2015.",
+    options: ["A) for", "B) since", "C) in", "D) from"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) since<br><br>الشرح: نستخدم 'since' مع نقطة بداية زمنية محددة."
+},
+{
+    question: "44. I don’t have ____ money left.",
+    options: ["A) some", "B) a few", "C) any", "D) few"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) any<br><br>الشرح: نستخدم 'any' في الجمل المنفية مع الأسماء غير المعدودة."
+},
+{
+    question: "45. They ____ a new car last week.",
+    options: ["A) buy", "B) bought", "C) have bought", "D) had bought"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) bought<br><br>الشرح: حدث مكتمل في الماضي يُستخدم معه الماضي البسيط."
+},
+{
+    question: "46. That’s the man ____ helped me.",
+    options: ["A) which", "B) whose", "C) who", "D) whom"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) who<br><br>الشرح: نستخدم 'who' مع الفاعل العاقل."
+},
+{
+    question: "47. We ____ to the mall when it started raining.",
+    options: ["A) went", "B) were going", "C) have gone", "D) go"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) were going<br><br>الشرح: يعبر عن حدث كان مستمرًا عندما قاطعته حادثة أخرى."
+},
+{
+    question: "48. The test was ____ difficult for most students.",
+    options: ["A) too", "B) so", "C) very", "D) enough"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) too<br><br>الشرح: 'too difficult' تعني أن الاختبار صعب جدًا بدرجة تمنع النجاح."
+},
+{
+    question: "49. I enjoy ____ to music in my free time.",
+    options: ["A) listen", "B) listening", "C) to listen", "D) listened"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) listening<br><br>الشرح: بعد 'enjoy' نستخدم الفعل + ing."
+},
+{
+    question: "50. She doesn’t like coffee, and I don’t ____.",
+    options: ["A) too", "B) also", "C) either", "D) neither"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) either<br><br>الشرح: 'either' تُستخدم في الجمل المنفية بمعنى 'أيضًا'."
+},
+{
+    question: "51. They arrived ____ time to catch the train.",
+    options: ["A) on", "B) in", "C) at", "D) by"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) on<br><br>الشرح: 'on time' تعني في الوقت المحدد تمامًا."
+},
+{
+    question: "52. My brother is taller ____ I am.",
+    options: ["A) as", "B) like", "C) than", "D) then"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) than<br><br>الشرح: 'than' تُستخدم للمقارنة بين شخصين."
+},
+{
+    question: "53. This is the pen with ____ I wrote the letter.",
+    options: ["A) which", "B) who", "C) that", "D) where"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) which<br><br>الشرح: 'which' تُستخدم مع الأشياء."
+},
+{
+    question: "54. We have lived here ____ five years.",
+    options: ["A) since", "B) for", "C) from", "D) during"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) for<br><br>الشرح: 'for' تُستخدم مع مدة زمنية."
+},
+{
+    question: "55. He’s the boy ____ father is a doctor.",
+    options: ["A) who", "B) whom", "C) which", "D) whose"],
+    correctAnswer: 3,
+    explanation: "الإجابة الصحيحة: D) whose<br><br>الشرح: 'whose' تُستخدم للدلالة على الملكية."
+},
+{
+    question: "56. Not only ____ smart, but also hardworking.",
+    options: ["A) he is", "B) is he", "C) he was", "D) was he"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) is he<br><br>الشرح: بعد 'Not only' يأتي التقديم inversion."
+},
+{
+    question: "57. She prefers tea ____ coffee.",
+    options: ["A) from", "B) than", "C) over", "D) to"],
+    correctAnswer: 3,
+    explanation: "الإجابة الصحيحة: D) to<br><br>الشرح: 'prefer' يتبعها 'to' عند المقارنة بين شيئين."
+},
+{
+    question: "58. This box is too heavy for me ____.",
+    options: ["A) carry", "B) to carry", "C) carrying", "D) carried"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) to carry<br><br>الشرح: التركيب الصحيح هو 'too + adjective + to + verb'."
+},
+{
+    question: "59. He always speaks ____ in class.",
+    options: ["A) polite", "B) politely", "C) politeness", "D) politeful"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) politely<br><br>الشرح: نستخدم الحال (adverb) لوصف الفعل 'speaks'."
+},
+{
+    question: "60. I haven’t seen her ____ Monday.",
+    options: ["A) since", "B) for", "C) during", "D) from"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) since<br><br>الشرح: نستخدم 'since' مع نقطة زمنية محددة."
+},
+{
+    question: "61. The movie was so boring that I ____ asleep.",
+    options: ["A) fall", "B) fell", "C) had fallen", "D) was falling"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) fell<br><br>الشرح: 'so...that' followed by past simple for a completed past action."
+},
+{
+    question: "62. If she had studied harder, she ____ the exam.",
+    options: ["A) will pass", "B) would pass", "C) would have passed", "D) passes"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) would have passed<br><br>الشرح: هذا النوع الثالث من الجمل الشرطية يستخدم للتعبير عن الندم."
+},
+{
+    question: "63. Let’s go out for dinner, ____?",
+    options: ["A) shall we", "B) do we", "C) will we", "D) don’t we"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) shall we<br><br>الشرح: بعد الاقتراح باستخدام 'Let's' نستخدم 'shall we' في السؤال التذييلي."
+},
+{
+    question: "64. He’s interested ____ learning Spanish.",
+    options: ["A) to", "B) in", "C) on", "D) at"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) in<br><br>الشرح: 'interested in' هو التعبير الصحيح."
+},
+{
+    question: "65. Neither the students nor the teacher ____ happy.",
+    options: ["A) are", "B) were", "C) is", "D) be"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) is<br><br>الشرح: الفعل يتبع الفاعل الأقرب وهو 'teacher'."
+},
+{
+    question: "66. There ____ a lot of traffic today.",
+    options: ["A) is", "B) are", "C) were", "D) have"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) is<br><br>الشرح: 'traffic' اسم غير معدود، نستخدم معه 'is'."
+},
+{
+    question: "67. She said that she ____ busy.",
+    options: ["A) is", "B) was", "C) has been", "D) will be"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) was<br><br>الشرح: عند تحويل الكلام المباشر إلى غير مباشر، يتحول المضارع إلى ماضي."
+},
+{
+    question: "68. I’d rather you ____ me the truth.",
+    options: ["A) tell", "B) told", "C) have told", "D) tells"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) told<br><br>الشرح: بعد 'I'd rather you' نستخدم الماضي البسيط رغم أن المعنى للمضارع."
+},
+{
+    question: "69. How long ____ you lived here?",
+    options: ["A) did", "B) do", "C) have", "D) are"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) have<br><br>الشرح: السؤال في المضارع التام لأنه يتحدث عن مدة مستمرة حتى الآن."
+},
+{
+    question: "70. The cake smells ____.",
+    options: ["A) delicious", "B) deliciously", "C) well", "D) goodly"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) delicious<br><br>الشرح: مع أفعال الحواس نستخدم الصفات وليس الظروف."
+},
+{
+    question: "71. He came late ____ the heavy traffic.",
+    options: ["A) because", "B) because of", "C) due", "D) so that"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) because of<br><br>الشرح: 'because of' يتبعها اسم وليس جملة."
+},
+{
+    question: "72. Not until he apologized ____ her forgive him.",
+    options: ["A) did", "B) was", "C) had", "D) does"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) did<br><br>الشرح: بعد 'Not until' نستخدم التقديم (inversion) للفعل المساعد."
+},
+{
+    question: "73. I have difficulty ____ his handwriting.",
+    options: ["A) to read", "B) read", "C) reading", "D) in read"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) reading<br><br>الشرح: بعد 'have difficulty' نستخدم الفعل + ing."
+},
+{
+    question: "74. The man ____ wallet was stolen reported to the police.",
+    options: ["A) who", "B) which", "C) whose", "D) whom"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) whose<br><br>الشرح: 'whose' تُستخدم للدلالة على الملكية."
+},
+{
+    question: "75. I wish I ____ more time to relax.",
+    options: ["A) have", "B) had", "C) will have", "D) has"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) had<br><br>الشرح: بعد 'I wish' نستخدم الماضي للتعبير عن التمني."
+},
+{
+    question: "76. The news ____ surprising.",
+    options: ["A) are", "B) were", "C) is", "D) be"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) is<br><br>الشرح: 'news' اسم غير معدود ويعامل كمفرد."
+},
+{
+    question: "77. He acted as if he ____ the boss.",
+    options: ["A) is", "B) was", "C) were", "D) has been"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) were<br><br>الشرح: بعد 'as if' نستخدم 'were' للتعبير عن موقف غير حقيقي."
+},
+{
+    question: "78. I haven’t finished my homework ____.",
+    options: ["A) already", "B) still", "C) yet", "D) anymore"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) yet<br><br>الشرح: 'yet' تُستخدم في النفي والأسئلة في المضارع التام."
+},
+{
+    question: "79. She was absent ____ she was sick.",
+    options: ["A) because", "B) because of", "C) due", "D) so"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) because<br><br>الشرح: 'because' يتبعها جملة كاملة."
+},
+{
+    question: "80. We’ll go for a walk ____ it doesn’t rain.",
+    options: ["A) if", "B) unless", "C) though", "D) although"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) if<br><br>الشرح: نستخدم 'if' للتعبير عن شرط محتمل الحدوث."
+},
+{
+    question: "81. By the time we arrived, the movie ____.",
+    options: ["A) has started", "B) had started", "C) started", "D) was starting"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) had started<br><br>الشرح: 'By the time' تستخدم مع الماضي التام لتوضيح أن الحدث وقع قبل نقطة زمنية في الماضي."
+},
+{
+    question: "82. She hardly ever ____ to parties.",
+    options: ["A) go", "B) goes", "C) going", "D) gone"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) goes<br><br>الشرح: الفاعل مفرد لذلك نستخدم 'goes' مع 'hardly ever'."
+},
+{
+    question: "83. I’d rather ____ at home tonight.",
+    options: ["A) staying", "B) stayed", "C) stay", "D) to stay"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) stay<br><br>الشرح: بعد 'I’d rather' نستخدم الفعل في صورته الأساسية (المجردة)."
+},
+{
+    question: "84. I won’t go out ____ it stops raining.",
+    options: ["A) if", "B) unless", "C) when", "D) although"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) unless<br><br>الشرح: 'unless' تعني 'if not'."
+},
+{
+    question: "85. The teacher asked if we ____ any questions.",
+    options: ["A) have", "B) had", "C) has", "D) having"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) had<br><br>الشرح: بعد أفعال الكلام مثل 'asked' نستخدم الماضي في reported speech."
+},
+{
+    question: "86. He hasn’t called me ____ last week.",
+    options: ["A) for", "B) during", "C) since", "D) from"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) since<br><br>الشرح: 'since' تُستخدم مع نقطة زمنية محددة."
+},
+{
+    question: "87. This soup tastes ____.",
+    options: ["A) well", "B) good", "C) better", "D) nicely"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) good<br><br>الشرح: مع أفعال الحواس نستخدم الصفات وليس الظروف."
+},
+{
+    question: "88. They ____ in this city for five years now.",
+    options: ["A) are living", "B) have lived", "C) live", "D) lives"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) have lived<br><br>الشرح: المضارع التام يُستخدم مع مدة زمنية بدأت في الماضي وما زالت مستمرة."
+},
+{
+    question: "89. I remember ____ him at the party.",
+    options: ["A) meet", "B) met", "C) to meet", "D) meeting"],
+    correctAnswer: 3,
+    explanation: "الإجابة الصحيحة: D) meeting<br><br>الشرح: 'remember' + verb-ing تشير لحدث وقع في الماضي."
+},
+{
+    question: "90. She is not tall enough ____ the shelf.",
+    options: ["A) reaching", "B) reach", "C) to reach", "D) reaches"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) to reach<br><br>الشرح: 'enough' يتبعها 'to + base verb' للتعبير عن القدرة."
+},
+{
+    question: "91. I don’t know what ____.",
+    options: ["A) do", "B) to do", "C) doing", "D) did"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) to do<br><br>الشرح: بعد 'what' نستخدم 'to + verb' عند عدم وجود فعل رئيسي."
+},
+{
+    question: "92. Would you mind ____ the window?",
+    options: ["A) close", "B) to close", "C) closing", "D) closed"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) closing<br><br>الشرح: بعد 'Would you mind' نستخدم الفعل + ing."
+},
+{
+    question: "93. I have two sisters. One is a teacher and ____ is a doctor.",
+    options: ["A) other", "B) the other", "C) another", "D) others"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) the other<br><br>الشرح: عندما تتحدث عن اثنين، نستخدم 'the other' للثاني."
+},
+{
+    question: "94. If I were you, I ____ take that job.",
+    options: ["A) will", "B) would", "C) should", "D) can"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) would<br><br>الشرح: الحالة الثانية من الجمل الشرطية (تخيّلية)."
+},
+{
+    question: "95. There is no point in ____ again.",
+    options: ["A) try", "B) trying", "C) to try", "D) tried"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) trying<br><br>الشرح: بعد 'no point in' نستخدم الفعل + ing."
+},
+{
+    question: "96. We’re used to ____ early.",
+    options: ["A) wake up", "B) waking up", "C) woke up", "D) to wake up"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) waking up<br><br>الشرح: 'used to' متبوعة بـ verb-ing تعني عادة حالية."
+},
+{
+    question: "97. She prefers tea ____ coffee.",
+    options: ["A) for", "B) than", "C) over", "D) to"],
+    correctAnswer: 3,
+    explanation: "الإجابة الصحيحة: D) to<br><br>الشرح: 'prefer X to Y' هو الاستخدام الصحيح."
+},
+{
+    question: "98. I saw him ____ the building.",
+    options: ["A) enters", "B) entered", "C) entering", "D) enter"],
+    correctAnswer: 3,
+    explanation: "الإجابة الصحيحة: D) enter<br><br>الشرح: بعد أفعال الإدراك نستخدم الفعل في صورته الأساسية بدون 'to'."
+},
+{
+    question: "99. The book was ____ by many people.",
+    options: ["A) writing", "B) wrote", "C) written", "D) write"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) written<br><br>الشرح: الجملة في المبني للمجهول (passive)."
+},
+{
+    question: "100. That’s the restaurant ____ we had dinner.",
+    options: ["A) which", "B) where", "C) that", "D) in which"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) where<br><br>الشرح: 'where' تُستخدم للدلالة على المكان في الجمل الموصولة."
+},
+{
+    question: "101. We couldn’t go out because it was snowing ____.",
+    options: ["A) heavy", "B) heavily", "C) heaviness", "D) heaviest"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) heavily<br><br>الشرح: نحتاج إلى حال (adverb) لوصف الفعل 'was snowing'."
+},
+{
+    question: "102. Not only ____ late, but he also forgot his homework.",
+    options: ["A) he was", "B) was he", "C) he is", "D) is he"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) was he<br><br>الشرح: بعد 'Not only' نستخدم تركيب الجملة المعكوس (inversion)."
+},
+{
+    question: "103. He apologized ____ being late.",
+    options: ["A) of", "B) about", "C) for", "D) to"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) for<br><br>الشرح: 'apologized for' هو الاستخدام الصحيح مع الفعل ing."
+},
+{
+    question: "104. The more you practice, the ____ you become.",
+    options: ["A) best", "B) better", "C) good", "D) well"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) better<br><br>الشرح: نستخدم 'the more..., the better' للمقارنة المتزايدة."
+},
+{
+    question: "105. It took me a long time to get used to ____ on the night shift.",
+    options: ["A) work", "B) working", "C) worked", "D) to work"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) working<br><br>الشرح: بعد 'get used to' نستخدم الفعل + ing."
+},
+{
+    question: "106. She asked me where ____ the keys.",
+    options: ["A) did I put", "B) I did put", "C) I had put", "D) had I put"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) I had put<br><br>الشرح: في الكلام غير المباشر نستخدم الماضي التام."
+},
+{
+    question: "107. He didn’t study; ____, he failed the test.",
+    options: ["A) although", "B) therefore", "C) because", "D) unless"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) therefore<br><br>الشرح: 'therefore' تعني 'لذلك' وتربط السبب بالنتيجة."
+},
+{
+    question: "108. If I had known, I ____ you.",
+    options: ["A) will tell", "B) would tell", "C) would have told", "D) told"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) would have told<br><br>الشرح: الحالة الثالثة من الجملة الشرطية (past unreal)."
+},
+{
+    question: "109. He works as a teacher, ____?",
+    options: ["A) does he", "B) doesn’t he", "C) is he", "D) isn’t he"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) doesn’t he<br><br>الشرح: نستخدم question tag مع الفعل الأساسي 'works'."
+},
+{
+    question: "110. Let’s go out, ____?",
+    options: ["A) shall we", "B) don’t we", "C) will we", "D) won’t we"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) shall we<br><br>الشرح: بعد الاقتراح باستخدام 'let’s' نستخدم 'shall we'."
+},
+{
+    question: "111. He is the man ____ car was stolen.",
+    options: ["A) which", "B) who", "C) whose", "D) whom"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) whose<br><br>الشرح: 'whose' تُستخدم للملكية."
+},
+{
+    question: "112. They made me ____ the form again.",
+    options: ["A) to fill", "B) filled", "C) filling", "D) fill"],
+    correctAnswer: 3,
+    explanation: "الإجابة الصحيحة: D) fill<br><br>الشرح: بعد make + مفعول، نستخدم الفعل مجردًا."
+},
+{
+    question: "113. I’ll keep studying ____ I pass the test.",
+    options: ["A) until", "B) during", "C) while", "D) when"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) until<br><br>الشرح: 'until' تعني 'حتى'."
+},
+{
+    question: "114. He’s interested ____ learning Spanish.",
+    options: ["A) in", "B) on", "C) at", "D) to"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) in<br><br>الشرح: 'interested in' هو الاستخدام الصحيح."
+},
+{
+    question: "115. I’m looking forward to ____ you.",
+    options: ["A) meet", "B) meeting", "C) met", "D) to meet"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) meeting<br><br>الشرح: بعد 'looking forward to' نستخدم الفعل + ing."
+},
+{
+    question: "116. This is the first time I ____ sushi.",
+    options: ["A) try", "B) tried", "C) have tried", "D) had tried"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) have tried<br><br>الشرح: بعد 'the first time' نستخدم المضارع التام."
+},
+{
+    question: "117. She has too many clothes ____.",
+    options: ["A) to wear", "B) wearing", "C) wear", "D) wore"],
+    correctAnswer: 0,
+    explanation: "الإجابة الصحيحة: A) to wear<br><br>الشرح: 'too many + noun + to + verb'."
+},
+{
+    question: "118. He denied ____ the vase.",
+    options: ["A) break", "B) to break", "C) breaking", "D) broke"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) breaking<br><br>الشرح: بعد 'deny' نستخدم الفعل + ing."
+},
+{
+    question: "119. ____ being tired, he finished the project.",
+    options: ["A) Although", "B) Because", "C) Despite", "D) Since"],
+    correctAnswer: 2,
+    explanation: "الإجابة الصحيحة: C) Despite<br><br>الشرح: 'Despite' يليها اسم أو gerund."
+},
+{
+    question: "120. I wish I ____ more money.",
+    options: ["A) have", "B) had", "C) will have", "D) has"],
+    correctAnswer: 1,
+    explanation: "الإجابة الصحيحة: B) had<br><br>الشرح: في جمل التمني (wish) نستخدم الماضي."
+}
         ];
 
         // Reading Comprehension (20 سؤالاً)
         const readingData = [
             {
-                passage: "The Industrial Revolution, which began in Britain in the late 18th century, marked a major turning point in history. It transformed economies that had been based on agriculture and handicrafts into economies based on large-scale industry, mechanized manufacturing, and the factory system. New machines, new power sources, and new ways of organizing work made existing industries more productive and efficient.",
+                passage: "The digital revolution has transformed how we communicate and access information. With the advent of smartphones and high-speed internet, people can now connect instantly across the globe. This technological shift has impacted various sectors including education, business, and entertainment. While these advancements offer numerous benefits, they also raise concerns about privacy and digital addiction.",
                 questions: [
                     {
-                        question: "1. Where did the Industrial Revolution begin?",
-                        options: ["A) France", "B) Germany", "C) Britain", "D) United States"],
-                        correctAnswer: 2,
-                        explanation: "الإجابة الصحيحة: C) Britain<br><br>الشرح: النص يذكر أن الثورة الصناعية بدأت في بريطانيا."
-                    },
-                    {
-                        question: "2. What did the Industrial Revolution primarily transform?",
-                        options: ["A) Political systems", "B) Agricultural economies", "C) Religious beliefs", "D) Educational methods"],
+                        question: "1. What has the digital revolution transformed?",
+                        options: ["A) Transportation methods", "B) Communication and information access", "C) Agricultural techniques", "D) Medical procedures"],
                         correctAnswer: 1,
-                        explanation: "الإجابة الصحيحة: B) Agricultural economies<br><br>الشرح: النص يذكر أنها حولت الاقتصادات الزراعية إلى صناعية."
+                        explanation: "الإجابة الصحيحة: B) Communication and information access<br><br>الشرح: النص يذكر أن الثورة الرقمية غيرت طريقة التواصل والوصول للمعلومات."
                     },
                     {
-                        question: "3. Which of the following was NOT mentioned as a factor in the Industrial Revolution?",
-                        options: ["A) New machines", "B) New political theories", "C) New power sources", "D) New ways of organizing work"],
-                        correctAnswer: 1,
-                        explanation: "الإجابة الصحيحة: B) New political theories<br><br>الشرح: النص لم يذكر النظريات السياسية."
-                    },
-                    {
-                        question: "4. What was the main result of the Industrial Revolution?",
-                        options: ["A) Decreased productivity", "B) More efficient industries", "C) Return to agricultural economy", "D) Reduced population growth"],
-                        correctAnswer: 1,
-                        explanation: "الإجابة الصحيحة: B) More efficient industries<br><br>الشرح: النص يذكر أن الصناعات أصبحت أكثر إنتاجية وكفاءة."
-                    }
-                ]
-            },
-            {
-                passage: "Global warming refers to the long-term rise in the average temperature of the Earth's climate system. It is a major aspect of climate change and has been demonstrated by direct temperature measurements and by measurements of various effects of the warming. The primary cause of global warming is the human expansion of the 'greenhouse effect' - warming that results when the atmosphere traps heat radiating from Earth toward space.",
-                questions: [
-                    {
-                        question: "5. What is the main topic of this passage?",
-                        options: ["A) Air pollution", "B) Global warming", "C) Deforestation", "D) Water scarcity"],
-                        correctAnswer: 1,
-                        explanation: "الإجابة الصحيحة: B) Global warming<br><br>الشرح: النص يركز على ظاهرة الاحتباس الحراري."
-                    },
-                    {
-                        question: "6. What is mentioned as the primary cause of global warming?",
-                        options: ["A) Volcanic activity", "B) Human expansion of greenhouse effect", "C) Solar radiation", "D) Natural climate cycles"],
-                        correctAnswer: 1,
-                        explanation: "الإجابة الصحيحة: B) Human expansion of greenhouse effect<br><br>الشرح: النص يذكر أن السبب الرئيسي هو النشاط البشري."
-                    },
-                    {
-                        question: "7. How has global warming been demonstrated?",
-                        options: ["A) Through political debates", "B) By temperature measurements", "C) By economic indicators", "D) Through population statistics"],
-                        correctAnswer: 1,
-                        explanation: "الإجابة الصحيحة: B) By temperature measurements<br><br>الشرح: النص يذكر القياسات المباشرة لدرجات الحرارة."
-                    },
-                    {
-                        question: "8. What does the 'greenhouse effect' refer to?",
-                        options: ["A) Cooling of the atmosphere", "B) Trapping of heat in the atmosphere", "C) Depletion of ozone layer", "D) Increase in ocean currents"],
-                        correctAnswer: 1,
-                        explanation: "الإجابة الصحيحة: B) Trapping of heat in the atmosphere<br><br>الشرح: النص يذكر أن الاحتباس الحراري ينتج عن احتباس الحرارة."
-                    }
-                ]
-            },
-            {
-                passage: "The human brain is the most complex organ in the body. It controls thought, memory, emotion, touch, motor skills, vision, breathing, temperature, hunger, and every process that regulates our body. The brain and spinal cord make up the central nervous system. The brain is composed of about 100 billion neurons that communicate in trillions of connections called synapses.",
-                questions: [
-                    {
-                        question: "9. What is described as the most complex organ in the body?",
-                        options: ["A) Heart", "B) Liver", "C) Brain", "D) Lungs"],
-                        correctAnswer: 2,
-                        explanation: "الإجابة الصحيحة: C) Brain<br><br>الشرح: النص يصف الدماغ بأنه العضو الأكثر تعقيداً."
-                    },
-                    {
-                        question: "10. Which system does the brain belong to?",
-                        options: ["A) Digestive system", "B) Central nervous system", "C) Circulatory system", "D) Respiratory system"],
-                        correctAnswer: 1,
-                        explanation: "الإجابة الصحيحة: B) Central nervous system<br><br>الشرح: النص يذكر أن الدماغ والحبل الشوكي يشكلان الجهاز العصبي المركزي."
-                    },
-                    {
-                        question: "11. Approximately how many neurons is the brain composed of?",
-                        options: ["A) 1 million", "B) 1 billion", "C) 100 billion", "D) 1 trillion"],
-                        correctAnswer: 2,
-                        explanation: "الإجابة الصحيحة: C) 100 billion<br><br>الشرح: النص يذكر أن الدماغ يتكون من حوالي 100 مليار خلية عصبية."
-                    },
-                    {
-                        question: "12. Which of the following is NOT mentioned as being controlled by the brain?",
-                        options: ["A) Memory", "B) Emotion", "C) Digestion", "D) Breathing"],
-                        correctAnswer: 2,
-                        explanation: "الإجابة الصحيحة: C) Digestion<br><br>الشرح: النص لم يذكر عملية الهضم ضمن الوظائف التي يتحكم فيها الدماغ."
-                    }
-                ]
-            },
-            {
-                passage: "The Internet has revolutionized communication and access to information. It allows instant connectivity across the globe, enabling people to share ideas, conduct business, and access knowledge from anywhere at any time. The development of the World Wide Web in 1989 by Tim Berners-Lee marked a significant milestone in making the Internet accessible to the general public. Today, the Internet has become an essential tool in education, commerce, and social interaction.",
-                questions: [
-                    {
-                        question: "13. What has the Internet revolutionized?",
-                        options: ["A) Transportation", "B) Communication", "C) Agriculture", "D) Construction"],
-                        correctAnswer: 1,
-                        explanation: "الإجابة الصحيحة: B) Communication<br><br>الشرح: النص يذكر أن الإنترنت أحدث ثورة في الاتصالات."
-                    },
-                    {
-                        question: "14. Who developed the World Wide Web?",
-                        options: ["A) Bill Gates", "B) Steve Jobs", "C) Tim Berners-Lee", "D) Mark Zuckerberg"],
-                        correctAnswer: 2,
-                        explanation: "الإجابة الصحيحة: C) Tim Berners-Lee<br><br>الشرح: النص يذكر أن تيم بيرنرز لي طور الويب العالمي عام 1989."
-                    },
-                    {
-                        question: "15. What is mentioned as a benefit of the Internet?",
-                        options: ["A) Slower communication", "B) Limited access to information", "C) Instant global connectivity", "D) Higher transportation costs"],
-                        correctAnswer: 2,
-                        explanation: "الإجابة الصحيحة: C) Instant global connectivity<br><br>الشرح: النص يذكر أن الإنترنت يتيح الاتصال الفوري عالمياً."
-                    },
-                    {
-                        question: "16. In which fields has the Internet become essential?",
-                        options: ["A) Education and commerce", "B) Agriculture only", "C) Construction only", "D) Manufacturing only"],
+                        question: "2. What technological developments enabled this transformation?",
+                        options: ["A) Smartphones and high-speed internet", "B) Solar panels and wind turbines", "C) Hybrid cars and electric vehicles", "D) Satellites and space exploration"],
                         correctAnswer: 0,
-                        explanation: "الإجابة الصحيحة: A) Education and commerce<br><br>الشرح: النص يذكر التعليم والتجارة كمجالات أساسية للإنترنت."
+                        explanation: "الإجابة الصحيحة: A) Smartphones and high-speed internet<br><br>الشرح: النص يذكر الهواتف الذكية والإنترنت السريع كمحركين لهذا التحول."
+                    },
+                    {
+                        question: "3. Which sectors are mentioned as being impacted?",
+                        options: ["A) Education, business, and entertainment", "B) Agriculture, mining, and construction", "C) Healthcare, tourism, and sports", "D) Manufacturing, retail, and transportation"],
+                        correctAnswer: 0,
+                        explanation: "الإجابة الصحيحة: A) Education, business, and entertainment<br><br>الشرح: النص يذكر هذه القطاعات الثلاثة كمستفيدة من التطورات."
+                    },
+                    {
+                        question: "4. What concerns are raised about these advancements?",
+                        options: ["A) Cost and maintenance", "B) Privacy and digital addiction", "C) Safety and reliability", "D) Availability and accessibility"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) Privacy and digital addiction<br><br>الشرح: النص يذكر مخاوف تتعلق بالخصوصية والإدمان الرقمي."
                     }
                 ]
             },
             {
-                passage: "Biodiversity refers to the variety of life on Earth at all its levels, from genes to ecosystems. It encompasses the evolutionary, ecological, and cultural processes that sustain life. Biodiversity is not evenly distributed; it is generally greater in the tropics and tends to be concentrated in certain hotspots. The loss of biodiversity threatens essential ecosystem services that humans depend on, such as clean air, fresh water, and crop pollination.",
+                passage: "Climate change is one of the most pressing issues facing humanity today. Rising global temperatures lead to melting glaciers, rising sea levels, and extreme weather events. Scientists agree that human activities, particularly the burning of fossil fuels, are the primary contributors to this phenomenon. Addressing climate change requires international cooperation and sustainable practices.",
                 questions: [
                     {
-                        question: "17. What does biodiversity refer to?",
-                        options: ["A) Only animal species", "B) Variety of life at all levels", "C) Only plant species", "D) Only marine life"],
+                        question: "5. How is climate change described in the passage?",
+                        options: ["A) A minor environmental fluctuation", "B) One of the most pressing issues", "C) A naturally occurring cycle", "D) A localized weather pattern"],
                         correctAnswer: 1,
-                        explanation: "الإجابة الصحيحة: B) Variety of life at all levels<br><br>الشرح: النص يعرف التنوع الحيوي بأنه تنوع الحياة على جميع المستويات."
+                        explanation: "الإجابة الصحيحة: B) One of the most pressing issues<br><br>الشرح: النص يصف تغير المناخ بأنه من أكثر القضايا إلحاحاً."
                     },
                     {
-                        question: "18. Where is biodiversity generally greater?",
-                        options: ["A) In polar regions", "B) In deserts", "C) In the tropics", "D) In urban areas"],
+                        question: "6. What are mentioned as consequences of rising temperatures?",
+                        options: ["A) Increased agricultural productivity", "B) Melting glaciers and rising sea levels", "C) More stable weather patterns", "D) Expansion of polar ice caps"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) Melting glaciers and rising sea levels<br><br>الشرح: النص يذكر ذوبان الجليد وارتفاع منسوب البحار."
+                    },
+                    {
+                        question: "7. What is identified as the primary cause of climate change?",
+                        options: ["A) Volcanic activity", "B) Solar radiation", "C) Human activities", "D) Natural climate cycles"],
                         correctAnswer: 2,
-                        explanation: "الإجابة الصحيحة: C) In the tropics<br><br>الشرح: النص يذكر أن التنوع الحيوي أكبر عموماً في المناطق الاستوائية."
+                        explanation: "الإجابة الصحيحة: C) Human activities<br><br>الشرح: النص يذكر أن الأنشطة البشرية هي السبب الرئيسي."
                     },
                     {
-                        question: "19. What is threatened by the loss of biodiversity?",
-                        options: ["A) Ecosystem services", "B) Urban development", "C) Industrial growth", "D) Technological advancement"],
+                        question: "8. What does addressing climate change require according to the passage?",
+                        options: ["A) National isolation", "B) International cooperation", "C) Technological stagnation", "D) Increased fossil fuel use"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) International cooperation<br><br>الشرح: النص يذكر أن الحل يتطلب تعاوناً دولياً."
+                    }
+                ]
+            },
+            {
+                passage: "The human digestive system is a complex series of organs that processes food for energy and nutrients. It begins in the mouth where food is chewed and mixed with saliva, then travels through the esophagus to the stomach. After being broken down in the stomach, food moves to the small intestine where nutrients are absorbed, and finally to the large intestine where water is absorbed before waste is eliminated.",
+                questions: [
+                    {
+                        question: "9. What is the main function of the digestive system?",
+                        options: ["A) Pumping blood throughout the body", "B) Processing food for energy and nutrients", "C) Filtering toxins from the blood", "D) Producing hormones for growth"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) Processing food for energy and nutrients<br><br>الشرح: النص يذكر أن هذه هي الوظيفة الأساسية للجهاز الهضمي."
+                    },
+                    {
+                        question: "10. Where does digestion begin?",
+                        options: ["A) Stomach", "B) Small intestine", "C) Mouth", "D) Esophagus"],
+                        correctAnswer: 2,
+                        explanation: "الإجابة الصحيحة: C) Mouth<br><br>الشرح: النص يذكر أن الهضم يبدأ في الفم."
+                    },
+                    {
+                        question: "11. What happens to food in the stomach?",
+                        options: ["A) Nutrients are absorbed", "B) It is broken down", "C) Water is removed", "D) It is converted to energy"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) It is broken down<br><br>الشرح: النص يذكر أن الطعام يتفكك في المعدة."
+                    },
+                    {
+                        question: "12. Where does most nutrient absorption occur?",
+                        options: ["A) Mouth", "B) Stomach", "C) Small intestine", "D) Large intestine"],
+                        correctAnswer: 2,
+                        explanation: "الإجابة الصحيحة: C) Small intestine<br><br>الشرح: النص يذكر أن الامتصاص الرئيسي للعناصر الغذائية يحدث في الأمعاء الدقيقة."
+                    }
+                ]
+            },
+            {
+                passage: "Artificial intelligence (AI) is revolutionizing various industries by enabling machines to perform tasks that typically require human intelligence. AI applications range from voice assistants and recommendation systems to medical diagnosis and autonomous vehicles. While AI offers tremendous potential, it also raises ethical concerns regarding job displacement, privacy, and decision-making transparency.",
+                questions: [
+                    {
+                        question: "13. What is artificial intelligence enabling machines to do?",
+                        options: ["A) Perform manual labor only", "B) Tasks requiring human intelligence", "C) Basic mathematical calculations", "D) Simple repetitive tasks"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) Tasks requiring human intelligence<br><br>الشرح: النص يذكر أن الذكاء الاصطناعي يمكن الآلات من أداء مهام تحتاج ذكاءً بشرياً."
+                    },
+                    {
+                        question: "14. Which of these is mentioned as an AI application?",
+                        options: ["A) Voice assistants", "B) Solar panels", "C) Wind turbines", "D) Steam engines"],
                         correctAnswer: 0,
-                        explanation: "الإجابة الصحيحة: A) Ecosystem services<br><br>الشرح: النص يذكر أن فقدان التنوع الحيوي يهدد خدمات النظم البيئية."
+                        explanation: "الإجابة الصحيحة: A) Voice assistants<br><br>الشرح: النص يذكر المساعدات الصوتية كأحد تطبيقات الذكاء الاصطناعي."
                     },
                     {
-                        question: "20. Which of the following is NOT mentioned as an ecosystem service?",
-                        options: ["A) Clean air", "B) Fresh water", "C) Crop pollination", "D) Internet access"],
-                        correctAnswer: 3,
-                        explanation: "الإجابة الصحيحة: D) Internet access<br><br>الشرح: النص لم يذكر الوصول للإنترنت كخدمة للنظام البيئي."
+                        question: "15. What potential does AI offer according to the passage?",
+                        options: ["A) Limited and specialized", "B) Moderate and controlled", "C) Tremendous and wide-ranging", "D) Minimal and predictable"],
+                        correctAnswer: 2,
+                        explanation: "الإجابة الصحيحة: C) Tremendous and wide-ranging<br><br>الشرح: النص يذكر أن الذكاء الاصطناعي يقدم إمكانيات هائلة."
+                    },
+                    {
+                        question: "16. What concerns are raised about AI?",
+                        options: ["A) Cost and maintenance", "B) Size and weight", "C) Job displacement and privacy", "D) Speed and efficiency"],
+                        correctAnswer: 2,
+                        explanation: "الإجابة الصحيحة: C) Job displacement and privacy<br><br>الشرح: النص يذكر مخاوف تتعلق بفقدان الوظائف والخصوصية."
+                    }
+                ]
+            },
+            {
+                passage: "The Renaissance was a period of cultural and intellectual rebirth in Europe between the 14th and 17th centuries. It marked the transition from the Middle Ages to modernity, characterized by renewed interest in classical learning and values. The Renaissance saw significant developments in art, literature, science, and philosophy, with figures like Leonardo da Vinci, Michelangelo, and Galileo making groundbreaking contributions.",
+                questions: [
+                    {
+                        question: "17. What was the Renaissance?",
+                        options: ["A) A military conflict", "B) A period of cultural rebirth", "C) An economic depression", "D) A religious movement"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) A period of cultural rebirth<br><br>الشرح: النص يصف عصر النهضة بأنه فترة إحياء ثقافي."
+                    },
+                    {
+                        question: "18. When did the Renaissance occur?",
+                        options: ["A) 5th to 8th centuries", "B) 9th to 12th centuries", "C) 14th to 17th centuries", "D) 18th to 20th centuries"],
+                        correctAnswer: 2,
+                        explanation: "الإجابة الصحيحة: C) 14th to 17th centuries<br><br>الشرح: النص يذكر أن عصر النهضة كان بين القرنين 14 و17."
+                    },
+                    {
+                        question: "19. What characterized the Renaissance?",
+                        options: ["A) Decline in education", "B) Renewed interest in classical learning", "C) Rejection of scientific inquiry", "D) Isolation from other cultures"],
+                        correctAnswer: 1,
+                        explanation: "الإجابة الصحيحة: B) Renewed interest in classical learning<br><br>الشرح: النص يذكر الاهتمام المتجدد بالتعلم الكلاسيكي كسمة رئيسية."
+                    },
+                    {
+                        question: "20. Which Renaissance figure is mentioned in the passage?",
+                        options: ["A) Albert Einstein", "B) William Shakespeare", "C) Leonardo da Vinci", "D) Isaac Newton"],
+                        correctAnswer: 2,
+                        explanation: "الإجابة الصحيحة: C) Leonardo da Vinci<br><br>الشرح: النص يذكر ليوناردو دا فينشي كأحد أعلام عصر النهضة."
                     }
                 ]
             }
@@ -507,108 +1297,112 @@
         // Listening Comprehension (10 أسئلة)
         const listeningQuestions = [
             {
-                audioText: "Man: Excuse me, do you know where the nearest post office is? Woman: Yes, it's about two blocks from here. Go straight down this street, then turn left at the traffic light. It will be on your right next to the bank.",
-                question: "1. Where is the post office located?",
-                options: ["A) Next to the hospital", "B) Opposite the school", "C) Next to the bank", "D) Behind the supermarket"],
-                correctAnswer: 2,
-                explanation: "الإجابة الصحيحة: C) Next to the bank<br><br>الشرح: المرأة قالت 'سيكون على يمينك بجوار البنك'."
-            },
-            {
-                audioText: "Woman: Are you coming to the meeting tomorrow? Man: I'm afraid I can't. I have a doctor's appointment at that time.",
-                question: "2. Why can't the man attend the meeting?",
-                options: ["A) He's sick", "B) He has a doctor's appointment", "C) He'll be traveling", "D) He has another meeting"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) He has a doctor's appointment<br><br>الشرح: الرجل قال 'لدي موعد مع الطبيب في ذلك الوقت'."
-            },
-            {
-                audioText: "Professor: The assignment is due next Friday, not this Friday. Student: Oh, I thought it was due this week!",
-                question: "3. When is the assignment due?",
-                options: ["A) This Friday", "B) Next Friday", "C) Tomorrow", "D) In two weeks"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) Next Friday<br><br>الشرح: الأستاذ قال 'الواجب مستحق الجمعة القادمة، ليس هذا الجمعة'."
-            },
-            {
-                audioText: "Woman: Should we take the train or drive to the conference? Man: Let's drive. It's more flexible and we can leave when we want.",
-                question: "4. Why does the man prefer driving?",
-                options: ["A) It's cheaper", "B) It's more flexible", "C) It's faster", "D) It's more comfortable"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) It's more flexible<br><br>الشرح: الرجل قال 'القيادة أكثر مرونة ويمكننا المغادرة عندما نريد'."
-            },
-            {
-                audioText: "Man: I can't decide between the blue shirt and the green one. Woman: Well, the blue one matches your eyes better.",
-                question: "5. What does the woman recommend?",
-                options: ["A) The green shirt", "B) The blue shirt", "C) Neither shirt", "D) Both shirts"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) The blue shirt<br><br>الشرح: المرأة قالت 'اللون الأزرق يناسب لون عينيك أكثر'."
-            },
-            {
-                audioText: "Tour guide: This museum was built in 1892 and houses over 10,000 artifacts from ancient civilizations.",
-                question: "6. When was the museum built?",
-                options: ["A) 1792", "B) 1892", "C) 1992", "D) 2002"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) 1892<br><br>الشرح: المرشد السياحي قال 'تم بناء هذا المتحف عام 1892'."
-            },
-            {
-                audioText: "Woman: The seminar has been moved from Room 201 to Room 305. Man: Thanks for letting me know. I would have gone to the wrong place.",
-                question: "7. Where is the seminar now?",
-                options: ["A) Room 201", "B) Room 305", "C) Room 105", "D) Room 401"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) Room 305<br><br>الشرح: المرأة قالت 'تم نقل الندوة من الغرفة 201 إلى الغرفة 305'."
-            },
-            {
-                audioText: "Man: Do you want to get lunch at the new Italian restaurant? Woman: Actually, I had Italian last night. How about the Thai place instead?",
-                question: "8. Where will they probably eat?",
-                options: ["A) Italian restaurant", "B) Thai restaurant", "C) At home", "D) French restaurant"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) Thai restaurant<br><br>الشرح: المرأة اقترحت الذهاب إلى المطعم التايلاندي بدلاً من الإيطالي."
-            },
-            {
-                audioText: "Professor: Remember, the exam will cover chapters 5 through 8, not chapter 9. Student: Good, because I haven't read chapter 9 yet.",
-                question: "9. Which chapters are on the exam?",
-                options: ["A) 1-4", "B) 5-8", "C) 6-9", "D) All chapters"],
-                correctAnswer: 1,
-                explanation: "الإجابة الصحيحة: B) 5-8<br><br>الشرح: الأستاذ قال 'الامتحان سيغطي الفصول من 5 إلى 8، ليس الفصل 9'."
-            },
-            {
-                audioText: "Woman: The library closes at 9 tonight, not 10. Man: Oh, then we should hurry if we want to return these books.",
-                question: "10. Why are they hurrying?",
-                options: ["A) The library is closing soon", "B) They have another appointment", "C) The books are overdue", "D) They want to check out more books"],
-                correctAnswer: 0,
-                explanation: "الإجابة الصحيحة: A) The library is closing soon<br><br>الشرح: المكتبة ستغلق الساعة 9 بدلاً من 10، لذا عليهم الإسراع."
-            }
+    "audioText": "Man: Where did you put the keys? Woman: They’re on the kitchen counter, next to the fruit bowl.",
+    "question": "1. Where are the keys?",
+    "options": ["A) In the drawer", "B) On the table", "C) On the kitchen counter", "D) In the car"],
+    "correctAnswer": 2,
+    "explanation": "الإجابة الصحيحة: C) On the kitchen counter<br><br>الشرح: المرأة قالت إن المفاتيح على طاولة المطبخ بجانب سلة الفاكهة."
+  },
+  {
+    "audioText": "Woman: Are you coming to the office party tonight? Man: I’m not sure. I have a lot of work to finish.",
+    "question": "2. Why might the man not attend the party?",
+    "options": ["A) He is feeling sick", "B) He has too much work", "C) He doesn’t like parties", "D) He is out of town"],
+    "correctAnswer": 1,
+    "explanation": "الإجابة الصحيحة: B) He has too much work<br><br>الشرح: الرجل قال إنه غير متأكد بسبب كثرة العمل المتبقي عليه."
+  },
+  {
+    "audioText": "Man: The traffic was terrible this morning. Woman: I know, I was stuck on the highway for over an hour.",
+    "question": "3. What happened to the woman this morning?",
+    "options": ["A) She missed a meeting", "B) She had car trouble", "C) She was delayed by traffic", "D) She overslept"],
+    "correctAnswer": 2,
+    "explanation": "الإجابة الصحيحة: C) She was delayed by traffic<br><br>الشرح: المرأة قالت إنها علقت في الطريق السريع لأكثر من ساعة."
+  },
+  {
+    "audioText": "Woman: I can’t find my phone. Man: Did you check your bag?",
+    "question": "4. What does the man suggest the woman do?",
+    "options": ["A) Call her phone", "B) Buy a new one", "C) Check her bag", "D) Go back to the office"],
+    "correctAnswer": 2,
+    "explanation": "الإجابة الصحيحة: C) Check her bag<br><br>الشرح: الرجل سألها إن كانت قد فتشت حقيبتها."
+  },
+  {
+    "audioText": "Man: What time does the movie start? Woman: At 7:30, but we should get there early to find good seats.",
+    "question": "5. Why does the woman want to arrive early?",
+    "options": ["A) To buy snacks", "B) To meet friends", "C) To get good seats", "D) To avoid traffic"],
+    "correctAnswer": 2,
+    "explanation": "الإجابة الصحيحة: C) To get good seats<br><br>الشرح: المرأة قالت أنه من الأفضل أن يصلوا مبكرًا لإيجاد مقاعد جيدة."
+  },
+  {
+    "audioText": "Woman: The elevator is out of service again. Man: I guess we’ll have to take the stairs.",
+    "question": "6. What will they probably do?",
+    "options": ["A) Wait for the elevator", "B) Take the stairs", "C) Call maintenance", "D) Go home"],
+    "correctAnswer": 1,
+    "explanation": "الإجابة الصحيحة: B) Take the stairs<br><br>الشرح: الرجل قال إنهم سيضطرون لاستخدام الدرج."
+  },
+  {
+    "audioText": "Man: Do you want to go hiking this weekend? Woman: That sounds great! I’ve been wanting to get some fresh air.",
+    "question": "7. What does the woman think about going hiking?",
+    "options": ["A) She’s not interested", "B) She has other plans", "C) She thinks it’s a good idea", "D) She’s afraid of hiking"],
+    "correctAnswer": 2,
+    "explanation": "الإجابة الصحيحة: C) She thinks it’s a good idea<br><br>الشرح: المرأة قالت إنه يبدو رائعًا وأنها كانت ترغب في الخروج للهواء النقي."
+  },
+  {
+    "audioText": "Woman: I’m going to the grocery store. Do we need anything? Man: Yes, we’re out of milk and eggs.",
+    "question": "8. What does the man ask the woman to buy?",
+    "options": ["A) Bread and cheese", "B) Milk and eggs", "C) Vegetables and fruit", "D) Juice and cereal"],
+    "correctAnswer": 1,
+    "explanation": "الإجابة الصحيحة: B) Milk and eggs<br><br>الشرح: الرجل قال إن الحليب والبيض غير متوفرين."
+  },
+  {
+    "audioText": "Man: How was your vacation in Spain? Woman: It was amazing! The beaches were beautiful.",
+    "question": "9. What did the woman like most about her vacation?",
+    "options": ["A) The food", "B) The culture", "C) The beaches", "D) The shopping"],
+    "correctAnswer": 2,
+    "explanation": "الإجابة الصحيحة: C) The beaches<br><br>الشرح: المرأة قالت إن الشواطئ كانت جميلة، مما يدل على إعجابها بها."
+  },
+  {
+    "audioText": "Woman: I have to give a presentation tomorrow. Man: Good luck! I’m sure you’ll do great.",
+    "question": "10. What is the man doing?",
+    "options": ["A) Offering help", "B) Wishing her luck", "C) Giving advice", "D) Criticizing her"],
+    "correctAnswer": 1,
+    "explanation": "الإجابة الصحيحة: B) Wishing her luck<br><br>الشرح: الرجل قال 'حظًا سعيدًا' مما يعني أنه يتمنى لها التوفيق."
+  }
         ];
 
         // دالة تحويل النص إلى كلام
         function speakText(text) {
-            // إيقاف أي كلام جاري
-            window.speechSynthesis.cancel();
+            if (!('speechSynthesis' in window)) {
+                alert('عذرًا، هذه الميزة غير مدعومة في متصفحك');
+                return;
+            }
             
+            window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = "en-US";
-            utterance.rate = 0.9; // سرعة أقل لزيادة الوضوح
+            utterance.rate = 0.9;
             utterance.pitch = 1;
             
-            // محاولة استخدام صوت Google إن وجد
-            const voices = window.speechSynthesis.getVoices();
-            const googleVoice = voices.find(voice => 
-                voice.lang === 'en-US' && voice.name.includes('Google'));
-            utterance.voice = googleVoice || voices.find(voice => voice.lang === 'en-US');
+            // انتظر حتى يتم تحميل الأصوات
+            const speak = () => {
+                const voices = window.speechSynthesis.getVoices();
+                const googleVoice = voices.find(voice => 
+                    voice.lang === 'en-US' && voice.name.includes('Google'));
+                utterance.voice = googleVoice || voices.find(voice => voice.lang === 'en-US');
+                window.speechSynthesis.speak(utterance);
+            };
             
-            window.speechSynthesis.speak(utterance);
+            if (speechSynthesis.getVoices().length > 0) {
+                speak();
+            } else {
+                speechSynthesis.onvoiceschanged = speak;
+            }
         }
 
         // عرض الأسئلة عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
+        window.onload = function() {
             displayQuestions();
-            
-            // تحميل الأصوات المتاحة
-            if (speechSynthesis.onvoiceschanged !== undefined) {
-                speechSynthesis.onvoiceschanged = loadVoices;
-            }
-        });
+        };
 
         function loadVoices() {
-            // هذه الدالة تضمن تحميل الأصوات قبل الحاجة إليها
             const voices = window.speechSynthesis.getVoices();
             console.log("الأصوات المتاحة:", voices);
         }
@@ -670,7 +1464,7 @@
         }
 
         function createQuestionElement(container, q, index, section) {
-            if (section === 'listening') return; // تم التعامل معها في displayQuestions
+            if (section === 'listening') return;
             
             const questionDiv = document.createElement('div');
             questionDiv.className = 'question';
@@ -766,13 +1560,13 @@
 
             // عرض النتيجة النهائية
             const totalScore = structureScore + readingScore + listeningScore;
-            const percentage = (totalScore / 50) * 100;
+            const percentage = (totalScore / 150) * 100;
             const resultDiv = document.getElementById('result');
             
             resultDiv.innerHTML = `
-                <p>النتيجة النهائية: ${totalScore} / 50</p>
+                <p>النتيجة النهائية: ${totalScore} / 150</p>
                 <p>النسبة المئوية: ${percentage.toFixed(1)}%</p>
-                <p>Structure: ${structureScore} / 20</p>
+                <p>Structure: ${structureScore} / 120</p>
                 <p>Reading: ${readingScore} / 20</p>
                 <p>Listening: ${listeningScore} / 10</p>
             `;
@@ -786,6 +1580,8 @@
         window.openSection = openSection;
         window.calculateScore = calculateScore;
         window.speakText = speakText;
+        window.startTimer = startTimer;
+        window.stopTimer = stopTimer;
     </script>
 </body>
 </html>
